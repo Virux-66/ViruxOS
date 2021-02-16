@@ -4,7 +4,7 @@
 #include "process.h"
 #include "global.h"
 #include "prototype.h"
-///////////////////////delete test
+
 PUBLIC	void cstart() {
 	memcpy(&gdt, (void*)(*((u32*)(&gdtPos[2]))), *((u16*)(&gdtPos[0]))+1);
 	u16* limit = (u16*)(&gdtPos[0]);
