@@ -1,9 +1,6 @@
 #ifndef _PROTOTYPE_H
 #define _PROTOTYPE_H
 
-#include "type.h"
-#include "important.h"
-
 PUBLIC void* memcpy(void* dest, void* source, int size); //string.asm
 PUBLIC void  memset(void* dest, char ch, int size);
 PUBLIC void dispStr(char* str);//string.asm
@@ -16,7 +13,7 @@ PUBLIC void initializeDescriptor(Descriptor* pointer, u32 base, u32 limit, u16 a
 PUBLIC u8 readPort(u16 port);//operatePort.asm
 PUBLIC void writePort(u16 port, u8 value);//operatePort.asm
 PUBLIC void initializePCB();//initializePCB.c
-PUBLIC void intializeTSS();//initializeTSSDescriptorInGDT.c
+PUBLIC void initializeTSS();//initializeTSSDescriptorInGDT.c
 PUBLIC void initializeLDT();//initializeLDTDescriptorInGDT.c
 PUBLIC void TestA();//processDemo.c
 

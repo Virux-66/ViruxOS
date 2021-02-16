@@ -1,6 +1,10 @@
 #include "type.h"
 #include "const.h"
+#include "intVector.h"
+#include "important.h"
+#include "process.h"
 #include "prototype.h"
+#include "global.h"
 
 PUBLIC void initialize8259A() {
 	writePort(INT_8259A_MASTER_PORT1, 0x11);	//ICW1

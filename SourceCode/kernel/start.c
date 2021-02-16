@@ -1,9 +1,10 @@
 #include "type.h"
 #include "const.h"
+#include "intVector.h"
 #include "important.h"
 #include "process.h"
-#include "global.h"
 #include "prototype.h"
+#include "global.h"
 
 PUBLIC	void cstart() {
 	memcpy(&gdt, (void*)(*((u32*)(&gdtPos[2]))), *((u16*)(&gdtPos[0]))+1);
@@ -19,8 +20,8 @@ PUBLIC	void cstart() {
 	initializeIDT();
 	//initialize TSS descriptor and LDT descriptor in GDT
 	initializeTSS();
-	intializeLDT();
-	intializePCB();
+	initializeLDT();
+	initializePCB();
 	PCBready = &PCBTable[0];
 }
 

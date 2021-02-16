@@ -1,5 +1,10 @@
 #include "type.h"
+#include "const.h"
+#include "intVector.h"
 #include "important.h"
+#include "process.h"
+#include "prototype.h"
+#include "global.h"
 
 PUBLIC void initializeDescriptor(Descriptor* pointer, u32 base, u32 limit,u16 attribute) {
 	pointer->limitLow = limit & 0xffff;

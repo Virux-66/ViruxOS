@@ -1,11 +1,13 @@
 #include "type.h"
+#include "const.h"
+#include "intVector.h"
 #include "important.h"
 #include "process.h"
-#include "global.h"
 #include "prototype.h"
+#include "global.h"
 
 
-PUBLIC void intializePCB() {
+PUBLIC void initializePCB() {
 	u16 selectorLDT = SELECTOR_LDT_FIRST;
 
 	for (int i = 0; i < processNumber; i++) {

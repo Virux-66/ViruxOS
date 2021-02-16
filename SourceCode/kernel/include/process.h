@@ -1,10 +1,5 @@
 #ifndef _PROCESS_H_
 #define _PROCESS_H_
-
-#include "type.h"
-#include "const.h"
-#include "important.h"
-
 #define processNumber 1
 #define processStackSize	0x8000
 

@@ -6,15 +6,15 @@ LD			=	ld
 CC			=	gcc
 ASMBFLAGS	=	-I booter/include/
 ASMKFLAGS	=	-f elf32 -I kernel/include/
-CFLAGS		=	-m32 -c -I kernel/include -std=c99
+CFLAGS		=	-m32 -c -I kernel/include -std=c99 -fno-builtin
 LDFLAGS		=	-m elf_i386 -s -Ttext ${ENTRYPOINT}
 
 #TARGET
 BOOTER		=	booter/bootSector.bin booter/Loader.bin
 KERNEL		=	kernel/Kernel.bin
 OBJS		=	kernel/Kernel.o kernel/start.o kernel/global.o kernel/initialize8259A.o \
-kernel/initializeIDT.o 	kernel/initializePCB.o kernel/intializeLDTDescriptorInGDT.o \
-kernel/intializeTSSDescriptorInGDT.o kernel/processDemo.o \
+kernel/initializeIDT.o 	kernel/initializePCB.o kernel/initializeLDTDescriptorInGDT.o \
+kernel/initializeTSSDescriptorInGDT.o kernel/processDemo.o \
 kernel/lib/string.o kernel/lib/operatePort.o kernel/lib/interruptHandler.o  kernel/lib/exceptionHandler.o kernel/lib/dispInt.o kernel/lib/initializeDescriptor.o
 
 .PHONY		:	all everything cleanAllBin cleanAllO buildImg
@@ -52,9 +52,9 @@ kernel/initializeIDT.o				:	kernel/initializeIDT.c kernel/include/type.h kernel/
 										${CC} ${CFLAGS} -o $@ $<
 kernel/initializePCB.o				:	kernel/initializePCB.c kernel/include/type.h kernel/include/global.h kernel/include/prototype.h kernel/include/process.h kernel/include/important.h 
 										${CC} ${CFLAGS} -o $@ $<
-kernel/intializeLDTDescriptorInGDT.o:	kernel/intializeLDTDescriptorInGDT.c kernel/include/type.h kernel/include/global.h kernel/include/important.h kernel/include/prototype.h kernel/include/process.h
+kernel/initializeLDTDescriptorInGDT.o:	kernel/initializeLDTDescriptorInGDT.c kernel/include/type.h kernel/include/global.h kernel/include/important.h kernel/include/prototype.h kernel/include/process.h
 										${CC} ${CFLAGS} -o $@ $<
-kernel/intializeTSSDescriptorInGDT.o:	kernel/intializeTSSDescriptorInGDT.c kernel/include/type.h kernel/include/global.h kernel/include/prototype.h kernel/include/important.h
+kernel/initializeTSSDescriptorInGDT.o:	kernel/initializeTSSDescriptorInGDT.c kernel/include/type.h kernel/include/global.h kernel/include/prototype.h kernel/include/important.h
 										${CC} ${CFLAGS} -o $@ $<
 kernel/processDemo.o				:	kernel/processDemo.c kernel/include/type.h kernel/include/prototype.h
 										${CC} ${CFLAGS} -o $@ $<

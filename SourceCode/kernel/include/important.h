@@ -1,8 +1,6 @@
 #ifndef _IMPORTANT_H
 #define _IMPORTANT_H
 
-#include "type.h"
-
 typedef struct gate_descriptor
 {
 	u16		offsetLow;

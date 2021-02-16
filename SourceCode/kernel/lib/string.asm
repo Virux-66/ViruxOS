@@ -1,4 +1,5 @@
 global memcpy
+global memset
 global dispStr
 global dispColorStr
 extern dispPos

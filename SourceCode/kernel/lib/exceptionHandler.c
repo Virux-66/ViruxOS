@@ -1,8 +1,11 @@
 #include "type.h"
 #include "const.h"
+#include "intVector.h"
 #include "important.h"
-#include "global.h"
+#include "process.h"
 #include "prototype.h"
+#include "global.h"
+
 PUBLIC void generalExceptionHandler(int vector, int errorCode, int eip, int cs, int eflags) {
 	//0x08:0x3095d
 	int i;
