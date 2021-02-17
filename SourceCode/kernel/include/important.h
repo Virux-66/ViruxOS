@@ -18,7 +18,7 @@ typedef struct segment_descriptor
 	u8      limitHigh_attr2;
 	u8      baseHigh2;
 }Descriptor;
-typedef struct TaskStatusSegment {
+typedef struct TaskStatusSegment {//104 bytes
 	u32 backlink;
 	u32 esp0;
 	u32 ss0;
@@ -105,5 +105,9 @@ typedef struct TaskStatusSegment {
 #define	INDEX_TSS		4
 #define INDEX_LDT_FIRST	5
 
-
+//authority
+#define PRIVILEGE_RING0	0
+#define PRIVILEGE_RING1	1
+#define PRIVILEGE_RING2	2
+#define PRIVILEGE_RING3	3
 #endif

@@ -21,7 +21,7 @@ _start:
 	lidt [idtPos];label idtPos is 0x32804
 	jmp MACRO_SelectorFlatC:csinit
 csinit:
-    mov eax,MACRO_SelectorTSS
+    mov ax,MACRO_SelectorTSS
 	ltr ax
 	mov esp,[PCBready]
 	lldt [esp+72]

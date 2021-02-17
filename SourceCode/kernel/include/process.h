@@ -27,7 +27,7 @@ typedef struct stackframe {
 typedef struct processControlBlock {
 	stackFrame stackframe;
 	u16 ldtSelector;		//this selector is connected to gdt
-	Descriptor ldt[LDTSIZE]; //LDTSIZE defined in const.h
+	Descriptor ldt[LDTSIZE]; //LDTSIZE defined in const.h  0x3c50a
 	u32 processID;
 	char processName[16];
 }PCB;
