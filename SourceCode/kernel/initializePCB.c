@@ -16,7 +16,8 @@ PUBLIC void initializePCB() {
 		memcpy(&pPCB->ldt[0], &gdt[1], sizeof(Descriptor));
 		pPCB->ldt[0].attr1 = DA_P | (PRIVILEGE_RING1 << 5) | DA_S | DA_C_X | DA_C_R;
 		memcpy(&pPCB->ldt[1], &gdt[2], sizeof(Descriptor));
-		pPCB->ldt[1].attr1 = DA_P | (PRIVILEGE_RING1 << 5) | DA_S | DA_D_0;
+		pPCB->ldt[1].attr1 = DA_P | (PRIVILEGE_RING1 << 5) | DA_S | DA_D_0 | DA_D_W;
+		//pPCB->ldt[1].limitHigh_attr2 =0xcf;
 		//initialize segment register,selector connected to LDT
 		pPCB->stackframe.cs = 0x00;
 		pPCB->stackframe.cs = SA_LDT | SA_RPL1;
@@ -31,8 +32,8 @@ PUBLIC void initializePCB() {
 		pPCB->stackframe.fs = 0x00;
 		pPCB->stackframe.fs = 0x08 | SA_LDT | SA_RPL1;
 		pPCB->stackframe.eip = (u32)TestA;
-		pPCB->stackframe.esp=(u32)processStack[i] + sizeof(processStack[i]);
-		pPCB->stackframe.eflags = 0x1202;
+		pPCB->stackframe.esp=(u32)&processStack + sizeof(ProcessStackSize);
+		pPCB->stackframe.eflags = 0x1002;
 		//pPCB->processName = "TestA";
 	}
 }

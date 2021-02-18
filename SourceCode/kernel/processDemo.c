@@ -6,7 +6,7 @@
 #include "prototype.h"
 #include "global.h"
 
-PUBLIC void TestA() {
+PUBLIC void TestA() { //0x05:0x30d01
 	int i = 0;
 	while (1) {
 		dispStr("A");

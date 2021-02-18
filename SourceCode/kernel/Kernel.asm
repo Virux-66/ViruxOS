@@ -20,7 +20,7 @@ _start:
 	lgdt [gdtPos]
 	lidt [idtPos];label idtPos is 0x32804
 	jmp MACRO_SelectorFlatC:csinit
-csinit:
+csinit:;0x08:0x30430
     mov ax,MACRO_SelectorTSS
 	ltr ax
 	mov esp,[PCBready]

@@ -17,11 +17,11 @@ typedef struct stackframe {
 	u32 edx;
 	u32 eax;
 	u32 retaddr;
-	u32 eip;
-	u32 cs;
+	u32 eip;//0x30cfa
+	u32 cs;//0x05
 	u32 eflags;
-	u32 esp;
-	u32 ss;
+	u32 esp;//0x344c4
+	u32 ss;//0x0d
 }stackFrame;
 
 typedef struct processControlBlock {
