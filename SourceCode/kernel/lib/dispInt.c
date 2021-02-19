@@ -18,7 +18,7 @@ PRIVATE char* itoa(char* str, int num) { //transform num into hex string
 	if (num == 0) {
 		*p = '0';
 		p++;
-		return p;
+		//return p;
 	}
 	else {
 		int i = 28;
