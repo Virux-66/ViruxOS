@@ -5,14 +5,17 @@
 #include "process.h"
 #include "prototype.h"
 #include "global.h"
-
+#include "task.h"
 
 PUBLIC void initializePCB() {
 	u16 selectorLDT = SELECTOR_LDT_FIRST;
 
 	for (int i = 0; i < processNumber; i++) {
 		PCB* pPCB = &PCBTable[i];
+		TASK* task = &taskTable[i];
+
 		pPCB->ldtSelector = selectorLDT;
+		selectorLDT += 8;
 		memcpy(&pPCB->ldt[0], &gdt[1], sizeof(Descriptor));
 		pPCB->ldt[0].attr1 = DA_P | (PRIVILEGE_RING1 << 5) | DA_S | DA_C_X | DA_C_R;
 		memcpy(&pPCB->ldt[1], &gdt[2], sizeof(Descriptor));
@@ -31,9 +34,10 @@ PUBLIC void initializePCB() {
 		pPCB->stackframe.gs = (SELECTOR_VIDEO-0x03) | SA_GDT | SA_RPL1;
 		pPCB->stackframe.fs = 0x00;
 		pPCB->stackframe.fs = 0x08 | SA_LDT | SA_RPL1;
-		pPCB->stackframe.eip = (u32)TestA;
-		pPCB->stackframe.esp=(u32)&processStack + sizeof(processStackSize);
-		pPCB->stackframe.eflags = 0x1002;
-		memcpy(&pPCB->processName, "TestA", sizeof("TestA"));
+		pPCB->stackframe.eip = (u32)task->init_eip;
+		pPCB->stackframe.esp=(u32)&processStack + sizeof(processStackSize)*(i+1);
+		pPCB->stackframe.eflags = 0x1202;
+		pPCB->processID = i;
+		memcpy(&pPCB->processName, &(task->name), sizeof(task->name));
 	}
 }

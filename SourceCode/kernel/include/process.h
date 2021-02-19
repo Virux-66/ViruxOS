@@ -1,6 +1,6 @@
 #ifndef _PROCESS_H_
 #define _PROCESS_H_
-#define processNumber 1
+#define processNumber 2
 #define processStackSize	0x8000
 
 typedef struct stackframe {
@@ -29,7 +29,7 @@ typedef struct processControlBlock {
 	u16 ldtSelector;		//this selector is connected to gdt
 	Descriptor ldt[LDTSIZE]; //LDTSIZE defined in const.h  0x3c50a
 	u32 processID;
-	char processName[16];
+	char processName[32];
 }PCB;
 
 #endif // !_PROCESS_H_

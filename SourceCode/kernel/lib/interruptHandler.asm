@@ -31,9 +31,12 @@ global IRQ13Handler
 global IRQ14Handler
 global IRQ15Handler
 
-
-
+extern LABEL_TOPOFSTACK
+extern dispStr
 extern generalExceptionHandler
+extern PCBready
+
+message:	db	"#",0
 ;if the interrupt that happened has a error code, just push int vector
 ;otherwise,before push int vector ,push 0xffffffff
 divideErrorHandler:		;0x08:0x30900
@@ -96,9 +99,29 @@ floatMistakeHandler:
 	jmp	exception	
 
 IRQ0Handler:
-	push 0xffffffff
-	push 0x20
-	jmp exception
+	sub esp,4
+	pushad
+	push ds
+	push es
+	push fs
+	push gs
+
+	mov ax,ss
+	mov ds,ax
+	mov es,ax
+
+	mov esp,LABEL_TOPSTACK
+	push message
+	call dispStr
+
+	mov esp,[PCBready]
+	pop gs
+	pop fs
+	pop es
+	pop ds
+	popad
+	add esp,4
+	iret
 
 IRQ1Handler:
 	push 0xffffffff

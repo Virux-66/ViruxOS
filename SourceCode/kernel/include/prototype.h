@@ -16,7 +16,7 @@ PUBLIC void initializePCB();//initializePCB.c
 PUBLIC void initializeTSS();//initializeTSSDescriptorInGDT.c
 PUBLIC void initializeLDT();//initializeLDTDescriptorInGDT.c
 PUBLIC void TestA();//processDemo.c
-
+PUBLIC void TestB();//processDemo.c
 
 
 //the following is interrup handler

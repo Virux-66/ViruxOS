@@ -16,4 +16,5 @@ PUBLIC void initializeTSS() {
 	u32 limit = sizeof(tss) - 1;
 	u16 attribute = DA_32 | DA_P | DA_NS | DA_386TSS;
 	initializeDescriptor(target, base, limit, attribute);
+	newDescIndex++;
 }

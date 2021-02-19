@@ -7,6 +7,7 @@
 #include "global.h"
 
 PUBLIC	void cstart() {
+	newDescIndex = 4;
 	memcpy(&gdt, (void*)(*((u32*)(&gdtPos[2]))), *((u16*)(&gdtPos[0]))+1);
 	u16* limit = (u16*)(&gdtPos[0]);
 	u32* base = (u32*)(&gdtPos[2]);
@@ -20,6 +21,9 @@ PUBLIC	void cstart() {
 	initializeIDT();
 	//initialize TSS descriptor and LDT descriptor in GDT
 	initializeTSS();
+	tss.ss0 = SELECTOR_FLAT_C;
+	tss.esp0 = (u32)&PCBTable[0];
+	tss.esp0 += 72;
 	initializeLDT();
 	initializePCB();
 	PCBready = &PCBTable[0];

@@ -6,3 +6,6 @@
 #include "process.h"
 #include "prototype.h"
 #include "global.h"
+
+PUBLIC TASK taskTable[taskNumber] = { {TestA,0x8000,"TestA"},
+									{TestB,0x8000,"TestB"} };

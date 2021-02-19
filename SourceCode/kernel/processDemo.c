@@ -14,3 +14,11 @@ PUBLIC void TestA() { //0x05:0x30d01
 		dispStr(".");
 	}
 }
+PUBLIC void TestB() {
+	int i = 0x1000;
+	while (1) {
+		dispStr("B");
+		dispInt(i++);
+		dispStr(".");
+	}
+}

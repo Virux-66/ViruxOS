@@ -19,5 +19,6 @@ PUBLIC void initializeLDT() {
 		initializeDescriptor(target, base, limit, attribute);
 		target++;
 		pointer++;
+		newDescIndex++;
 	}
 }

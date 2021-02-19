@@ -5,6 +5,9 @@ extern	gdtPos		;variable
 extern	idtPos		
 extern	dispPos
 extern PCBready
+
+global LABEL_TOPOFSTACK
+
 [SECTION .bss]
 LABEL_STACK_KERNEL:		resb		2*1024
 LABEL_TOPOFSTACK:
