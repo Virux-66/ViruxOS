@@ -33,13 +33,56 @@ global IRQ15Handler
 
 %include "const.inc"
 
+%macro IRQMACRO		1
+	call save
+
+	in al,INT_8259A_MASTER_PORT2
+	or al, (1 << %1)
+	out INT_8259A_MASTER_PORT2,al						;switch off clock interrupt
+
+	mov al,EOI
+	out INT_8259A_MASTER_PORT1 , al
+
+	sti
+	inc byte [gs:0]
+	push %1														;pass parameter
+	call [irqServiceTable+%1*4]									;the most important part for clock interrupt
+	pop ecx
+	cli
+
+	in al,INT_MASTER_PORT2
+	and al,~(1 << %1)
+	out INT_MASTER_PORT,al
+
+	ret													;jmp to .cont or .reEntry
+ cont:		
+	mov esp,[PCBready]									;;in the middle of process scheduling PCBready may has changed
+	lldt [esp+MACRO_P_PCBLDT]
+	mov eax,esp+MACRO_P_STACKTOP
+	mov dword [tss+MACRO_T_ESP0],eax
+ reEntry:
+	dec dword [intReEnterFlag]
+	pop gs
+	pop fs
+	pop es
+	pop ds
+	popad
+	add esp,4
+	iretd
+
+
+
+
+
+
+
 extern LABEL_TOPOFSTACK				;kernel stack esp 
 extern dispStr						;extern function defined in string.asm
 extern generalExceptionHandler		;extern function
 extern PCBready						;global variable
 extern intReEneterFlag				;global variable		;use it to decide whether to have another interrrupt
-extern clockHandler					;defined in clockHandler.c
 extern tss							;global varaible
+extern irqServiceTable
 
 ;if the interrupt that happened has a error code, just push int vector
 ;otherwise,before push int vector ,push 0xffffffff
@@ -104,94 +147,37 @@ floatMistakeHandler:
 
 ;when entering here from process, IF = 0 and EOI=0
 IRQ0Handler:
-	call save
-
-	mov al,EOI
-	out INT_8259A_MASTER_PORT1 , al
-
-	sti
-	inc byte [gs:0]
-	call clockHandler									;the most important part for clock interrupt
-	cli
-	ret													;jmp to .cont or .reEntry
- cont:		
-	mov esp,[PCBready]									;;in the middle of process scheduling PCBready may has changed
-	lldt [esp+MACRO_P_PCBLDT]
-	mov eax,esp+MACRO_P_STACKTOP
-	mov dword [tss+MACRO_T_ESP0],eax
- reEntry:
-	dec dword [intReEnterFlag]
-	pop gs
-	pop fs
-	pop es
-	pop ds
-	popad
-	add esp,4
-	iretd
-
-
-
-
+	IRQMACRO 0
 IRQ1Handler:
-	push 0xffffffff
-	push 0x21
-	jmp exception
+	IRQMACRO 1
 IRQ2Handler:
-	push 0xffffffff
-	push 0x22
-	jmp exception
+	IRQMACRO 2
 IRQ3Handler:
-	push 0xffffffff
-	push 0x23
-	jmp exception
+	IRQMACRO 3
 IRQ4Handler:
-	push 0xffffffff
-	push 0x24
-	jmp exception
+	IRQMACRO 4
 IRQ5Handler:
-	push 0xffffffff
-	push 0x25
-	jmp exception
+	IRQMACRO 5
 IRQ6Handler:
-	push 0xffffffff
-	push 0x26
-	jmp exception
+	IRQMACRO 6
 IRQ7Handler:
-	push 0xffffffff
-	push 0x27
-	jmp exception
+	IRQMACRO 7
 IRQ8Handler:
-	push 0xffffffff
-	push 0x28
-	jmp exception
+	IRQMACRO 8
 IRQ9Handler:
-	push 0xffffffff
-	push 0x29
-	jmp exception
+	IRQMACRO 9
 IRQ10Handler:
-	push 0xffffffff
-	push 0x2a
-	jmp exception
+	IRQMACRO 10
 IRQ11Handler:
-	push 0xffffffff
-	push 0x2b
-	jmp exception
+	IRQMACRO 11
 IRQ12Handler:
-	push 0xffffffff
-	push 0x2c
-	jmp exception
+	IRQMACRO 12
 IRQ13Handler:
-	push 0xffffffff
-	push 0x2d
-	jmp exception
+	IRQMACRO 13
 IRQ14Handler:
-	push 0xffffffff
-	push 0x2e
-	jmp exception
+	IRQMACRO 14
 IRQ15Handler:
-	push 0xffffffff
-	push 0x2f
-	jmp exception
+	IRQMACRO 15
 
 exception:	
 	call generalExceptionHandler

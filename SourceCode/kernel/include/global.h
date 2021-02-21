@@ -27,3 +27,4 @@ EXTERN u8 processStack[processStackSize*processNumber]; //0x344c4
 
 EXTERN TASK taskTable[taskNumber];
 
+EXTERN irqService irqServiceTable[16];		//save irq service function pointer
