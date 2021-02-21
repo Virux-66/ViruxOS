@@ -4,6 +4,7 @@
 #include "important.h"
 #include "process.h"
 #include "prototype.h"
+#include "task.h"
 #include "global.h"
 
 PRIVATE void initializeIdtDesc(unsigned char vector, u8 type,

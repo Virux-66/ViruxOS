@@ -4,6 +4,7 @@
 #include "important.h"
 #include "process.h"
 #include "prototype.h"
+#include "task.h"
 #include "global.h"
 
 PRIVATE char* itoa(char* str, int num) { //transform num into hex string

@@ -19,7 +19,7 @@ kernel/lib/string.o kernel/lib/operatePort.o kernel/lib/interruptHandler.o  kern
 
 .PHONY		:	all everything cleanAllBin cleanAllO buildImg
 
-all			:	cleanAllBin everything cleanAllO
+all			:	cleanAllBin cleanAllO everything cleanAllO
 everything	:	${BOOTER} ${KERNEL}
 cleanAllBin	:
 				rm -f ${BOOTER} ${KERNEL}

@@ -4,8 +4,8 @@
 #include "important.h"
 #include "process.h"
 #include "prototype.h"
+#include "task.h"
 #include "global.h"
-
 PUBLIC void TestA() { //0x05:0x30d01
 	int i = 0;
 	while (1) {

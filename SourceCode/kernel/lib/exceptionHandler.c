@@ -4,6 +4,7 @@
 #include "important.h"
 #include "process.h"
 #include "prototype.h"
+#include "task.h"
 #include "global.h"
 
 PUBLIC void generalExceptionHandler(int vector, int errorCode, int eip, int cs, int eflags) {

@@ -4,6 +4,7 @@
 #include "important.h"
 #include "process.h"
 #include "prototype.h"
+#include "task.h"
 #include "global.h"
 
 PUBLIC void initialize8259A() {
@@ -19,6 +20,6 @@ PUBLIC void initialize8259A() {
 	writePort(INT_8259A_MASTER_PORT2, 0x01);	//ICW4
 	writePort(INT_8259A_SLAVE_PORT2, 0x01);	//ICW4
 
-	writePort(INT_8259A_MASTER_PORT2, 0xfe);	//OCW1
-	writePort(INT_8259A_SLAVE_PORT2, 0xff);	//OCW1
+	writePort(INT_8259A_MASTER_PORT2, 0x00);	//OCW1
+	writePort(INT_8259A_SLAVE_PORT2, 0x00);	//OCW1
 }

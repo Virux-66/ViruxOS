@@ -31,12 +31,16 @@ global IRQ13Handler
 global IRQ14Handler
 global IRQ15Handler
 
-extern LABEL_TOPOFSTACK
-extern dispStr
-extern generalExceptionHandler
-extern PCBready
+%include "const.inc"
 
-message:	db	"#",0
+extern LABEL_TOPOFSTACK				;kernel stack esp 
+extern dispStr						;extern function defined in string.asm
+extern generalExceptionHandler		;extern function
+extern PCBready						;global variable
+extern intReEneterFlag				;global variable		;use it to decide whether to have another interrrupt
+extern clockHandler					;defined in clockHandler.c
+extern tss							;global varaible
+
 ;if the interrupt that happened has a error code, just push int vector
 ;otherwise,before push int vector ,push 0xffffffff
 divideErrorHandler:		;0x08:0x30900
@@ -98,30 +102,35 @@ floatMistakeHandler:
 	push 0x10
 	jmp	exception	
 
+;when entering here from process, IF = 0 and EOI=0
 IRQ0Handler:
-	sub esp,4
-	pushad
-	push ds
-	push es
-	push fs
-	push gs
+	call save
 
-	mov ax,ss
-	mov ds,ax
-	mov es,ax
+	mov al,EOI
+	out INT_8259A_MASTER_PORT1 , al
 
-	mov esp,LABEL_TOPSTACK
-	push message
-	call dispStr
-
-	mov esp,[PCBready]
+	sti
+	inc byte [gs:0]
+	call clockHandler									;the most important part for clock interrupt
+	cli
+	ret													;jmp to .cont or .reEntry
+ cont:		
+	mov esp,[PCBready]									;;in the middle of process scheduling PCBready may has changed
+	lldt [esp+MACRO_P_PCBLDT]
+	mov eax,esp+MACRO_P_STACKTOP
+	mov dword [tss+MACRO_T_ESP0],eax
+ reEntry:
+	dec dword [intReEnterFlag]
 	pop gs
 	pop fs
 	pop es
 	pop ds
 	popad
 	add esp,4
-	iret
+	iretd
+
+
+
 
 IRQ1Handler:
 	push 0xffffffff
@@ -188,3 +197,23 @@ exception:
 	call generalExceptionHandler
 	add esp,4*2
 	hlt
+
+save:
+	pushad
+	push ds
+	push es
+	push fs
+	push gs
+	mov dx,ss
+	mov ds,dx
+	mov es,dx
+	mov eax,esp
+	inc dword [intReEnterFlag]
+	cmp [intReEnterFlag],0
+	jne .1
+	mov esp,LABEL_TOPOFSTACK		;change esp to kernel esp
+	push cont						;serve to ret
+	jmp [eax+MACRO_P_RETADDR]
+ .1:
+	push reEntry
+	jmp [eax+MACRO_P_RETADDR]

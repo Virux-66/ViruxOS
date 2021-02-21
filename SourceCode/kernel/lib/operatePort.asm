@@ -10,6 +10,8 @@ readPort:
 	in al,dx
 	nop
 	nop
+	nop
+	nop
 	pop edx
 	pop ebp
 	ret
@@ -23,6 +25,8 @@ writePort:
 	mov eax,[ebp+0x0c]
 	out	dx,al
 	nop				;read or write has kind of delay
+	nop
+	nop
 	nop
 	pop edx
 	pop eax

@@ -4,8 +4,8 @@
 #include "important.h"
 #include "process.h"
 #include "prototype.h"
-#include "global.h"
 #include "task.h"
+#include "global.h"
 
 PUBLIC void initializePCB() {
 	u16 selectorLDT = SELECTOR_LDT_FIRST;
