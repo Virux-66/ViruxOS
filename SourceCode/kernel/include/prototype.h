@@ -103,5 +103,7 @@ PUBLIC void IRQ14Handler();
 PUBLIC void IRQ15Handler();
 
 //interrupt service
-PUBLIC void clockService();	//clockService.c
+PUBLIC void clockService(int irq);	//clockService.c
+
+PUBLIC void spurious_irq(int irq);	//init8259A.c
 #endif // !_PROtOTYPE_H

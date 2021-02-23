@@ -97,12 +97,12 @@ clear:
 	push eax
 	push ecx
 	mov ecx,80*25
-	mov [disPos],0x00
+	mov dword [dispPos],0x00
 	mov eax,32
  .1:
 	push eax
 	call dispStr
 	sub esp,0x04
 	loop .1
-	mov [dispPos],0x00
+	mov dword [dispPos],0x00
 	ret

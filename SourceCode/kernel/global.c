@@ -1,5 +1,6 @@
 #define _GLOBAL_VARIABLE
 #include "type.h"
+#include "port.h"
 #include "const.h"
 #include "intVector.h"
 #include "important.h"
@@ -9,5 +10,6 @@
 #include "global.h"
 
 
-taskTable[taskNumber] = { {TestA,0x8000,"TestA"},
+PUBLIC TASK taskTable[taskNumber] = { {TestA,0x8000,"TestA"},
 									{TestB,0x8000,"TestB"} };
+PUBLIC irqService irqServiceTable[16];

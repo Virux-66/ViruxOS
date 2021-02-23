@@ -15,7 +15,8 @@ KERNEL		=	kernel/Kernel.bin
 OBJS		=	kernel/Kernel.o kernel/start.o kernel/global.o kernel/init8259A.o \
 kernel/initIDT.o 	kernel/initPCB.o kernel/initLDTDescriptor.o \
 kernel/initTSSDescriptor.o kernel/processDemo.o \
-kernel/lib/string.o kernel/lib/operatePort.o kernel/lib/interruptHandler.o  kernel/lib/exceptionHandler.o kernel/lib/dispInt.o kernel/lib/initDescriptor.o
+kernel/lib/string.o kernel/lib/operatePort.o kernel/lib/interruptHandler.o  kernel/lib/exceptionHandler.o kernel/lib/dispInt.o kernel/lib/initDescriptor.o \
+kernel/lib/display.o kernel/lib/clockService.o
 
 .PHONY		:	all everything cleanAllBin cleanAllO buildImg
 

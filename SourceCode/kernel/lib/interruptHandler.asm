@@ -31,6 +31,8 @@ global IRQ13Handler
 global IRQ14Handler
 global IRQ15Handler
 
+extern intReEnterFlag
+
 %include "const.inc"
 
 %macro IRQMACRO		1
@@ -50,17 +52,18 @@ global IRQ15Handler
 	pop ecx
 	cli
 
-	in al,INT_MASTER_PORT2
+	in al,INT_8259A_MASTER_PORT2
 	and al,~(1 << %1)
-	out INT_MASTER_PORT,al
+	out INT_8259A_MASTER_PORT2,al
 
 	ret													;jmp to .cont or .reEntry
- cont:		
+%endmacro
+cont:		
 	mov esp,[PCBready]									;;in the middle of process scheduling PCBready may has changed
 	lldt [esp+MACRO_P_PCBLDT]
-	mov eax,esp+MACRO_P_STACKTOP
+	lea eax,[esp+MACRO_P_STACKTOP]
 	mov dword [tss+MACRO_T_ESP0],eax
- reEntry:
+reEntry:
 	dec dword [intReEnterFlag]
 	pop gs
 	pop fs
@@ -69,7 +72,7 @@ global IRQ15Handler
 	popad
 	add esp,4
 	iretd
-%endmacro
+
 
 
 
@@ -197,7 +200,7 @@ save:
 	mov es,dx
 	mov eax,esp
 	inc dword [intReEnterFlag]
-	cmp [intReEnterFlag],0
+	cmp dword [intReEnterFlag],0
 	jne .1
 	mov esp,LABEL_TOPOFSTACK		;change esp to kernel esp
 	push cont						;serve to ret

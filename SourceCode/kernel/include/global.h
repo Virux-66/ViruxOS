@@ -25,6 +25,6 @@ EXTERN PCB* PCBready; //PCBready is in 0x08:0x344a0, which contains 0x3c4c0
 
 EXTERN u8 processStack[processStackSize*processNumber]; //0x344c4
 
-EXTERN TASK taskTable[taskNumber];
+extern TASK taskTable[taskNumber];
 
-EXTERN irqService irqServiceTable[16];		//save irq service function pointer
+extern irqService irqServiceTable[16];		//save irq service function pointer

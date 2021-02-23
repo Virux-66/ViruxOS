@@ -1,6 +1,6 @@
+#include "type.h"
 
 
-
-PUBLIC void clockService() {
+PUBLIC void clockService(int irq) {
 
 }

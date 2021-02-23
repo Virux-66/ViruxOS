@@ -1,4 +1,5 @@
 #include "type.h"
+#include "port.h"
 #include "const.h"
 #include "intVector.h"
 #include "important.h"
@@ -24,8 +25,6 @@ PUBLIC	void cstart() {
 	//initialize TSS descriptor and LDT descriptor in GDT
 	initializeTSS();
 	tss.ss0 = SELECTOR_FLAT_C;
-	tss.esp0 = (u32)&PCBTable[0];
-	tss.esp0 += 72;
 	initializeLDT();
 	initializePCB();
 	PCBready = &PCBTable[0];

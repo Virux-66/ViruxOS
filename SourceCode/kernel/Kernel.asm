@@ -6,6 +6,7 @@ extern	idtPos			;global variable
 extern	dispPos			;global variable
 extern  PCBready		;global variable
 extern	intReEnterFlag	;global variable
+extern	tss				;global variable
 
 global LABEL_TOPOFSTACK
 [SECTION .bss]
@@ -24,13 +25,13 @@ _start:
 	lgdt [gdtPos]
 	lidt [idtPos]					;label idtPos is 0x32804
 	jmp MACRO_SelectorFlatC:csinit
-csinit:								;0x08:0x30430
+csinit:								;0x08:0x3043a
 ;start the first process, recover the first process field
     mov ax,MACRO_SelectorTSS
 	ltr ax
 	mov esp,[PCBready]
-	lldt [esp+MACRO_P_PCBLDT]
-	mov eax,esp+MACRO_P_STACKTOP
+	lldt [esp+MACRO_P_PCBSel]
+	lea eax,[esp+MACRO_P_STACKTOP]
 	mov dword [tss+MACRO_T_ESP0],eax
 
 	dec dword [intReEnterFlag]
