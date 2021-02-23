@@ -1,7 +1,7 @@
 global readPort
 global writePort
 
-;PUBLIC int readPort(u16 port);
+;PUBLIC u8 readPort(u16 port);
 readPort:
 	push ebp
 	mov ebp,esp

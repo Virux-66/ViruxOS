@@ -69,6 +69,7 @@ global IRQ15Handler
 	popad
 	add esp,4
 	iretd
+%endmacro
 
 
 
@@ -145,6 +146,11 @@ floatMistakeHandler:
 	push 0x10
 	jmp	exception	
 
+exception:	
+	call generalExceptionHandler
+	add esp,4*2
+	hlt
+
 ;when entering here from process, IF = 0 and EOI=0
 IRQ0Handler:
 	IRQMACRO 0
@@ -179,10 +185,6 @@ IRQ14Handler:
 IRQ15Handler:
 	IRQMACRO 15
 
-exception:	
-	call generalExceptionHandler
-	add esp,4*2
-	hlt
 
 save:
 	pushad

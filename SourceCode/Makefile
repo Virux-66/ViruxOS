@@ -74,3 +74,7 @@ kernel/lib/exceptionHandler.o		:	kernel/lib/exceptionHandler.c kernel/include/ty
 										${CC} ${CFLAGS} -o $@ $<
 kernel/lib/initDescriptor.o			:	kernel/lib/initDescriptor.c kernel/include/type.h kernel/include/important.h
 										${CC} ${CFLAGS} -o $@ $<
+kernel/lib/clockService.o           :   kernel/lib/clockService.c 
+										${CC} ${CFLAGS} -o $@ $<
+kernel/lib/display.o				:	kernel/lib/display.asm
+										${ASM} ${ASMKFLAGS} -o $@ $<
