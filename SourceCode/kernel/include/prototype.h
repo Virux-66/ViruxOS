@@ -106,4 +106,7 @@ PUBLIC void IRQ15Handler();
 PUBLIC void clockService(int irq);	//clockService.c
 
 PUBLIC void spurious_irq(int irq);	//init8259A.c
+
+
+PUBLIC void delay();
 #endif // !_PROtOTYPE_H

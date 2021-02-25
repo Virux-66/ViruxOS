@@ -9,6 +9,8 @@ extern	intReEnterFlag	;global variable
 extern	tss				;global variable
 
 global LABEL_TOPOFSTACK
+global halt
+
 [SECTION .bss]
 LABEL_STACK_KERNEL:		resb		2*1024
 LABEL_TOPOFSTACK:
