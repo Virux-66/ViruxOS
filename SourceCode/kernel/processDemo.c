@@ -7,6 +7,7 @@
 #include "task.h"
 #include "global.h"
 
+//clock interrupt: 0x08:0x31232
 PUBLIC void delay() {
 	for (int i = 0; i < 1; i++) {
 		for (int j = 0; j < 10; j++) {
@@ -15,14 +16,13 @@ PUBLIC void delay() {
 	}
 }
 
-PUBLIC void TestA() { //0x05:0x30d01
+PUBLIC void TestA() { //0x05:0x30e26
 	int i = 0;
-	while (1) {
-		dispPos = 0;
+	while (i<20) {
 		dispStr("A");
 		dispInt(i++);
 		dispStr(".");
-		delay();
+
 	}
 }
 PUBLIC void TestB() {

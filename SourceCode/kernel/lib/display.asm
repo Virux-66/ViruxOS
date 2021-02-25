@@ -4,7 +4,7 @@ global clear
 
 extern dispPos
 
-
+LABEL_SPACE:	db 	" ",0
 ;;PUBLIC void dispStr(char* str);
 dispStr:
 	push ebp
@@ -98,11 +98,12 @@ clear:
 	push ecx
 	mov ecx,80*25
 	mov dword [dispPos],0x00
-	mov eax,32
  .1:
-	push eax
+	push LABEL_SPACE
 	call dispStr
-	sub esp,0x04
+	pop eax
 	loop .1
 	mov dword [dispPos],0x00
+	pop ecx
+	pop eax
 	ret
