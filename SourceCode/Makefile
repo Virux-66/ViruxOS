@@ -12,11 +12,13 @@ LDFLAGS		=	-m elf_i386 -s -Ttext ${ENTRYPOINT}
 #TARGET
 BOOTER		=	booter/bootSector.bin booter/Loader.bin
 KERNEL		=	kernel/Kernel.bin
-OBJS		=	kernel/Kernel.o kernel/start.o kernel/global.o kernel/init8259A.o \
-kernel/initIDT.o 	kernel/initPCB.o kernel/initLDTDescriptor.o \
-kernel/initTSSDescriptor.o kernel/processDemo.o \
-kernel/lib/string.o kernel/lib/operatePort.o kernel/lib/interruptHandler.o  kernel/lib/exceptionHandler.o kernel/lib/dispInt.o kernel/lib/initDescriptor.o \
-kernel/lib/display.o kernel/lib/clockService.o
+OBJS		=	kernel/Kernel.o kernel/start.o kernel/global.o kernel/processDemo.o \
+kernel/lib/dispInt.o kernel/lib/display.o kernel/lib/operatePort.o kernel/lib/string.o \
+kernel/init/init8259A.o kernel/init/initDescriptor.o kernel/init/initIDT.o kernel/init/initLDTDescriptor.o \
+kernel/init/initPCB.o kernel/init/initTSSDescriptor.o kernel/init/initVariable.o kernel/init/init8253.o\
+kernel/interrupt/exceptionHandler.o kernel/interrupt/clockService.o kernel/interrupt/interruptHandler.o \
+kernel/syscall/getTicks.o kernel/syscall/getTicksService.o
+
 
 .PHONY		:	all everything cleanAllBin cleanAllO buildImg
 
@@ -40,42 +42,65 @@ booter/Loader.bin					:	booter/Loader.asm booter/include/LoadingAddress.inc	boot
 kernel/Kernel.bin					:	${OBJS}
 										${LD} ${LDFLAGS} -o Kernel.bin ${OBJS}
 
-
+#SourceCode/kernel/
 kernel/Kernel.o						:	kernel/Kernel.asm 
 										${ASM} ${ASMKFLAGS} -o $@ $<
 kernel/start.o						:	kernel/start.c kernel/include/type.h kernel/include/const.h kernel/include/important.h kernel/include/global.h kernel/include/prototype.h
 										${CC} ${CFLAGS} -o $@ $<
 kernel/global.o						:	kernel/global.c  kernel/include/global.h
 										${CC} ${CFLAGS} -o $@ $<
-kernel/init8259A.o					:	kernel/init8259A.c kernel/include/type.h kernel/include/const.h kernel/include/prototype.h
-										${CC} ${CFLAGS} -o $@ $<
-kernel/initIDT.o					:	kernel/initIDT.c kernel/include/type.h kernel/include/global.h kernel/include/intVector.h kernel/include/prototype.h
-										${CC} ${CFLAGS} -o $@ $<
-kernel/initPCB.o					:	kernel/initPCB.c kernel/include/type.h kernel/include/global.h kernel/include/prototype.h kernel/include/process.h kernel/include/important.h 
-										${CC} ${CFLAGS} -o $@ $<
-kernel/initLDTDescriptor.o			:	kernel/initLDTDescriptor.c kernel/include/type.h kernel/include/global.h kernel/include/important.h kernel/include/prototype.h kernel/include/process.h
-										${CC} ${CFLAGS} -o $@ $<
-kernel/initTSSDescriptor.o			:	kernel/initTSSDescriptor.c kernel/include/type.h kernel/include/global.h kernel/include/prototype.h kernel/include/important.h
-										${CC} ${CFLAGS} -o $@ $<
 kernel/processDemo.o				:	kernel/processDemo.c kernel/include/type.h kernel/include/prototype.h
 										${CC} ${CFLAGS} -o $@ $<
 
 
 
-#lib part
-kernel/lib/string.o					:	kernel/lib/string.asm
-										${ASM} ${ASMKFLAGS} -o $@ $<
-kernel/lib/operatePort.o			:	kernel/lib/operatePort.asm 
-										${ASM} ${ASMKFLAGS} -o $@ $<
-kernel/lib/interruptHandler.o		:	kernel/lib/interruptHandler.asm
-										${ASM} ${ASMKFLAGS} -o $@ $<
-kernel/lib/dispInt.o				:	kernel/lib/dispInt.c kernel/include/type.h kernel/include/prototype.h
-										${CC} ${CFLAGS} -o $@ $<
-kernel/lib/exceptionHandler.o		:	kernel/lib/exceptionHandler.c kernel/include/type.h kernel/include/global.h kernel/include/prototype.h
-										${CC} ${CFLAGS} -o $@ $<
-kernel/lib/initDescriptor.o			:	kernel/lib/initDescriptor.c kernel/include/type.h kernel/include/important.h
-										${CC} ${CFLAGS} -o $@ $<
-kernel/lib/clockService.o           :   kernel/lib/clockService.c 
-										${CC} ${CFLAGS} -o $@ $<
-kernel/lib/display.o				:	kernel/lib/display.asm
-										${ASM} ${ASMKFLAGS} -o $@ $<
+
+
+
+#SourceCode/kernel/lib
+kernel/lib/dispInt.o					:	kernel/lib/dispInt.c kernel/include/type.h kernel/include/prototype.h
+											${CC} ${CFLAGS} -o $@ $<
+kernel/lib/display.o					:	kernel/lib/display.asm
+											${ASM} ${ASMKFLAGS} -o $@ $<
+kernel/lib/operatePort.o				:	kernel/lib/operatePort.asm 
+											${ASM} ${ASMKFLAGS} -o $@ $<
+kernel/lib/string.o						:	kernel/lib/string.asm
+											${ASM} ${ASMKFLAGS} -o $@ $<
+
+
+
+
+
+
+
+#SourceCode/kernel/init
+kernel/init/init8253.o					:	kernel/init/init8253.c kernel/include/type.h kernel/include/global.h kernel/include/intVector.h kernel/include/prototype.h
+											${CC} ${CFLAGS} -o $@ $<
+kernel/init/init8259A.o					:	kernel/init/init8259A.c kernel/include/type.h kernel/include/const.h kernel/include/prototype.h
+											${CC} ${CFLAGS} -o $@ $<
+kernel/init/initDescriptor.o			:	kernel/init/initDescriptor.c kernel/include/type.h kernel/include/important.h
+											${CC} ${CFLAGS} -o $@ $<
+kernel/init/initIDT.o					:	kernel/init/initIDT.c kernel/include/type.h kernel/include/global.h kernel/include/intVector.h kernel/include/prototype.h
+											${CC} ${CFLAGS} -o $@ $<
+kernel/init/initLDTDescriptor.o			:	kernel/init/initLDTDescriptor.c kernel/include/type.h kernel/include/global.h kernel/include/important.h kernel/include/prototype.h kernel/include/process.h
+											${CC} ${CFLAGS} -o $@ $<
+kernel/init/initPCB.o					:	kernel/init/initPCB.c kernel/include/type.h kernel/include/global.h kernel/include/prototype.h kernel/include/process.h kernel/include/important.h 
+											${CC} ${CFLAGS} -o $@ $<
+kernel/init/initTSSDescriptor.o			:	kernel/init/initTSSDescriptor.c kernel/include/type.h kernel/include/global.h kernel/include/prototype.h kernel/include/important.h
+											${CC} ${CFLAGS} -o $@ $<
+kernel/init/initVariable.o              :   kernel/init/initVariable.c  kernel/include/global.h
+											${CC} ${CFLAGS} -o $@ $<
+
+#SourceCode/kernel/interrupt
+kernel/interrupt/exceptionHandler.o		:	kernel/interrupt/exceptionHandler.c kernel/include/type.h kernel/include/global.h kernel/include/prototype.h
+											${CC} ${CFLAGS} -o $@ $<
+kernel/interrupt/clockService.o         :   kernel/interrupt/clockService.c 
+											${CC} ${CFLAGS} -o $@ $<
+kernel/interrupt/interruptHandler.o		:	kernel/interrupt/interruptHandler.asm
+											${ASM} ${ASMKFLAGS} -o $@ $<
+
+#SouceCode/kernel/syscall
+kernel/syscall/getTicks.o				:	kernel/syscall/getTicks.asm
+											${ASM} ${ASMKFLAGS} -o $@ $<
+kernel/syscall/getTicksService.o        :	kernel/syscall/getTicksService.c 
+											${CC} ${CFLAGS} -o $@ $<

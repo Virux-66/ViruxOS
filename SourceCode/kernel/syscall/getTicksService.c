@@ -8,9 +8,8 @@
 #include "task.h"
 #include "global.h"
 
-PUBLIC void clockService(int irq) {
-	dispStr("INT 0x20 happen!\n");
+
+PUBLIC int getTicksService() {
+	dispStr("+");
+	return ticks;
 }
-
-
-

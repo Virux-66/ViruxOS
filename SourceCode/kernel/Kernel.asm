@@ -20,8 +20,8 @@ global _start
 
 _start:
 	mov esp,LABEL_TOPOFSTACK	;LABEL_TOPSTACK=0x32800  ss=0x10
-	mov dword [dispPos],0x00	;label dispPos is 0x32800
-	mov dword [intReEnterFlag],0x00
+	;mov dword [dispPos],0x00	;label dispPos is 0x32800
+	;mov dword [intReEnterFlag],0x00
 	sgdt [gdtPos];label gdtPos is 0x32c20
 	call cstart
 	lgdt [gdtPos]

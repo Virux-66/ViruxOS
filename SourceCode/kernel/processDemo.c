@@ -17,12 +17,15 @@ PUBLIC void delay() {
 }
 
 PUBLIC void TestA() { //0x05:0x30e26
+	int tick;
+	tick= getTicks();
+	dispInt(tick);
+
 	int i = 0;
-	while (i<20) {
+	while (1) {
 		dispStr("A");
 		dispInt(i++);
 		dispStr(".");
-
 	}
 }
 PUBLIC void TestB() {

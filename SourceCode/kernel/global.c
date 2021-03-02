@@ -10,6 +10,10 @@
 #include "global.h"
 
 
-PUBLIC TASK taskTable[taskNumber] = { {TestA,0x8000,"TestA"},
+PUBLIC TASK taskTable[taskNumber]= { {TestA,0x8000,"TestA"},
 									{TestB,0x8000,"TestB"} };
-PUBLIC irqService irqServiceTable[16];
+PUBLIC irqService irqServiceTable[16] = { clockService };
+
+PUBLIC systemCall sysCallTable[16] = { getTicksService };// = {getTicksService};
+
+PUBLIC u8 processStack[processStackSize * processNumber];

@@ -9,6 +9,8 @@ EXTERN int newDescIndex;//in gdt
 
 EXTERN int intReEnterFlag;//if intReenterFlag>=0, more than one interrupts happened
 
+EXTERN int ticks;
+
 EXTERN u8 gdtPos[6];//0xff 0x03 0x20 0x28 0x03 0x00
 
 EXTERN Descriptor gdt[GDTSIZE];//this array is stored in 0x08:0x33820
@@ -23,8 +25,10 @@ EXTERN PCB PCBTable[processNumber];
 
 EXTERN PCB* PCBready; //PCBready is in 0x08:0x344a0, which contains 0x3c4c0
 
-EXTERN u8 processStack[processStackSize*processNumber]; //0x344c4
+extern u8 processStack[]; //0x344c4
 
-extern TASK taskTable[taskNumber];
+extern TASK taskTable[];
 
-extern irqService irqServiceTable[16];		//save irq service function pointer
+extern irqService irqServiceTable[];		//save irq service function pointer
+
+extern systemCall sysCallTable[];

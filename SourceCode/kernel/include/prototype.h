@@ -31,6 +31,8 @@ PUBLIC void initializeTSS();//initializeTSSDescriptorInGDT.c
 
 PUBLIC void initializeLDT();//initializeLDTDescriptorInGDT.c
 
+PUBLIC void init8253();//init8253.c
+
 PUBLIC void TestA();//processDemo.c
 
 PUBLIC void TestB();//processDemo.c
@@ -102,10 +104,16 @@ PUBLIC void IRQ14Handler();
 
 PUBLIC void IRQ15Handler();
 
+PUBLIC void sys_call();
 //interrupt service
 PUBLIC void clockService(int irq);	//clockService.c
 
 PUBLIC void spurious_irq(int irq);	//init8259A.c
+
+
+//syscall
+PUBLIC int getTicks();
+PUBLIC int getTicksService();
 
 
 PUBLIC void delay();

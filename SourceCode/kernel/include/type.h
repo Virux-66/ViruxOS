@@ -11,6 +11,8 @@ typedef unsigned char   u8;
 typedef void (*intHandler)();
 typedef void (*taskFunction)();
 typedef void (*irqService)(int irq);
+typedef void* systemCall;
+
 #define	PUBLIC
 #define	PRIVATE	static
 #define EXTERN extern

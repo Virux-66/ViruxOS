@@ -10,7 +10,9 @@
 
 
 PUBLIC	void cstart() {
+	dispPos = 0;
 	newDescIndex = 4;
+	ticks = 0;
 	memcpy(&gdt, (void*)(*((u32*)(&gdtPos[2]))), *((u16*)(&gdtPos[0]))+1);
 	u16* limit = (u16*)(&gdtPos[0]);
 	u32* base = (u32*)(&gdtPos[2]);
@@ -21,8 +23,8 @@ PUBLIC	void cstart() {
 	*limit = IDTSIZE * sizeof(Gate) - 1;
 	*base = (u32)&idt;
 	initialize8259A();
+	init8253();
 	initializeIDT();
-	//initialize TSS descriptor and LDT descriptor in GDT
 	initializeTSS();
 	tss.ss0 = SELECTOR_FLAT_C;
 	initializeLDT();

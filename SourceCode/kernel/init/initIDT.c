@@ -52,4 +52,6 @@ PUBLIC void initializeIDT() {
 	initializeIdtDesc(SLAVE_INT_NUM+5, DA_NS | DA_P | DA_386IGATE, IRQ13Handler, 0);
 	initializeIdtDesc(SLAVE_INT_NUM+6, DA_NS | DA_P | DA_386IGATE, IRQ14Handler, 0);
 	initializeIdtDesc(SLAVE_INT_NUM+7, DA_NS | DA_P | DA_386IGATE, IRQ15Handler, 0);
+
+	initializeIdtDesc(INT_VECTOR_SYSCALL, DA_NS | DA_P | DA_386IGATE, sys_call, 0);
 }

@@ -31,7 +31,10 @@ global IRQ13Handler
 global IRQ14Handler
 global IRQ15Handler
 
+global sys_call
+
 extern intReEnterFlag
+extern sysCallTable
 
 %include "const.inc"
 
@@ -188,6 +191,13 @@ IRQ14Handler:
 IRQ15Handler:
 	IRQMACRO 15
 
+sys_call:
+	call save
+	sti
+	call [sysCallTable+eax*0x04]
+	mov [esi+MACRO_P_EAXREG],eax
+	cli
+	ret
 
 save:
 	pushad
@@ -198,13 +208,13 @@ save:
 	mov dx,ss
 	mov ds,dx
 	mov es,dx
-	mov eax,esp
+	mov esi,esp
 	inc dword [intReEnterFlag]
 	cmp dword [intReEnterFlag],0
 	jne .1
 	mov esp,LABEL_TOPOFSTACK		;change esp to kernel esp
 	push cont						;serve to ret
-	jmp [eax+MACRO_P_RETADDR]
+	jmp [esi+MACRO_P_RETADDR]
  .1:
 	push reEntry
-	jmp [eax+MACRO_P_RETADDR]
+	jmp [esi+MACRO_P_RETADDR]
