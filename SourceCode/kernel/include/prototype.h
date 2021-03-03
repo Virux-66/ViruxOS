@@ -13,6 +13,8 @@ PUBLIC void clear();
 
 PUBLIC void dispInt(int num);//dispInt.c
 
+PUBLIC void dispCR();
+
 PUBLIC void generalExceptionHandler(int vector, int errorCode, int eip, int cs, int eflags);//exceptionHandler.c
 
 PUBLIC void initialize8259A();//initializeA.c
@@ -23,6 +25,10 @@ PUBLIC void initializeDescriptor(Descriptor* pointer, u32 base, u32 limit, u16 a
 //operatePort.asm
 PUBLIC u8 readPort(u16 port);
 
+PUBLIC void disableIrq(int irq);
+
+PUBLIC void enableIrq(int irq);
+
 PUBLIC void writePort(u16 port, u8 value);
 
 PUBLIC void initializePCB();//initializePCB.c
@@ -32,6 +38,8 @@ PUBLIC void initializeTSS();//initializeTSSDescriptorInGDT.c
 PUBLIC void initializeLDT();//initializeLDTDescriptorInGDT.c
 
 PUBLIC void init8253();//init8253.c
+
+PUBLIC void initKeyboard();//initKeyboard.c
 
 PUBLIC void TestA();//processDemo.c
 
@@ -108,6 +116,8 @@ PUBLIC void sys_call();
 //interrupt service
 PUBLIC void clockService(int irq);	//clockService.c
 
+PUBLIC void keyboardService(int irq);	//keyboardService.c
+
 PUBLIC void spurious_irq(int irq);	//init8259A.c
 
 
@@ -116,5 +126,5 @@ PUBLIC int getTicks();
 PUBLIC int getTicksService();
 
 
-PUBLIC void delay();
+PUBLIC void delayInMilli();//lib/delay.c
 #endif // !_PROtOTYPE_H

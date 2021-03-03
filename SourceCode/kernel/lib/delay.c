@@ -8,8 +8,7 @@
 #include "task.h"
 #include "global.h"
 
-
-PUBLIC int getTicksService() {
-	//dispStr("+");
-	return ticks;
+PUBLIC void delayInMilli(int milli_sec) {
+	int t = getTicks();
+	while (((getTicks() - t) * 1000 / 100) < milli_sec) {}
 }

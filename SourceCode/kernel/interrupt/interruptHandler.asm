@@ -62,7 +62,7 @@ extern sysCallTable
 	ret													;jmp to .cont or .reEntry
 %endmacro
 cont:		
-	mov esp,[PCBready]									;;in the middle of process scheduling PCBready may has changed
+	mov esp,[PCBready]									;
 	lldt [esp+MACRO_P_PCBSel]
 	lea eax,[esp+MACRO_P_STACKTOP]
 	mov dword [tss+MACRO_T_ESP0],eax

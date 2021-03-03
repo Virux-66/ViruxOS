@@ -7,7 +7,7 @@ EXTERN int dispPos;
 
 EXTERN int newDescIndex;//in gdt
 
-EXTERN int intReEnterFlag;//if intReenterFlag>=0, more than one interrupts happened
+EXTERN int intReEnterFlag;//first initialized in Kernel.asm
 
 EXTERN int ticks;
 

@@ -8,8 +8,7 @@
 #include "task.h"
 #include "global.h"
 
-
-PUBLIC int getTicksService() {
-	//dispStr("+");
-	return ticks;
+PUBLIC void initKeyboard() {
+	irqServiceTable[1] = keyboardService;
+	enableIrq(1);
 }

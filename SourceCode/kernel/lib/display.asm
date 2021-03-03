@@ -1,10 +1,13 @@
 global dispStr
 global dispColorStr
 global clear
+global dispCR
 
 extern dispPos
 
 LABEL_SPACE:	db 	" ",0
+LABEL_CR:		db  0x1d,0x1a,0
+
 ;;PUBLIC void dispStr(char* str);
 dispStr:
 	push ebp
@@ -107,3 +110,10 @@ clear:
 	pop ecx
 	pop eax
 	ret
+;void dispCR();
+dispCR:
+	push eax
+	push LABEL_CR
+	call dispStr
+	pop eax
+	pop eax

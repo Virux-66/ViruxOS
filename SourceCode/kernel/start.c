@@ -26,9 +26,10 @@ PUBLIC	void cstart() {
 	init8253();
 	initializeIDT();
 	initializeTSS();
-	tss.ss0 = SELECTOR_FLAT_C;
+	tss.ss0 = SELECTOR_FLAT_RW;
 	initializeLDT();
 	initializePCB();
-	PCBready = &PCBTable[0];
+	PCBready = PCBTable;
+	initKeyboard();
 }
 

@@ -8,8 +8,6 @@
 #include "task.h"
 #include "global.h"
 
-
-PUBLIC int getTicksService() {
-	//dispStr("+");
-	return ticks;
+PUBLIC void keyboardService(int irq) {
+	dispStr("*");
 }

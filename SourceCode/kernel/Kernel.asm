@@ -21,8 +21,8 @@ global _start
 _start:
 	mov esp,LABEL_TOPOFSTACK	;LABEL_TOPSTACK=0x32800  ss=0x10
 	;mov dword [dispPos],0x00	;label dispPos is 0x32800
-	;mov dword [intReEnterFlag],0x00
-	sgdt [gdtPos];label gdtPos is 0x32c20
+	mov dword [intReEnterFlag],0x00
+	sgdt [gdtPos]
 	call cstart
 	lgdt [gdtPos]
 	lidt [idtPos]					;label idtPos is 0x32804
@@ -31,7 +31,7 @@ csinit:								;0x08:0x3043a
 ;start the first process, recover the first process field
     mov ax,MACRO_SelectorTSS
 	ltr ax
-	mov esp,[PCBready]
+	mov esp,[PCBready]			;;PCBready=0x10:0x34580 PCB xp /72bx 0x10:0x445a0
 	lldt [esp+MACRO_P_PCBSel]
 	lea eax,[esp+MACRO_P_STACKTOP]
 	mov dword [tss+MACRO_T_ESP0],eax
@@ -43,6 +43,5 @@ csinit:								;0x08:0x3043a
 	pop ds
 	popad
 	add esp,4
-	;sti
-	;hlt
+	int 0x21
 	iretd
