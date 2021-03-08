@@ -31,7 +31,13 @@ LABEL_CODE_ENTRY:
 	mov ax,MACRO_STACK_BASE
 	mov ss,ax
 	mov sp,MACRO_STACK_OFFSET
-
+	
+	mov ax,0x01
+	mov dx,0x0000
+	call @DispStr
+	mov ax,0x02
+	mov dx,0x0100
+	call @DispStr
 
 LABEL_CODE_FLOOPYDRIVER_RESET:
 	xor ah,ah
@@ -39,6 +45,9 @@ LABEL_CODE_FLOOPYDRIVER_RESET:
 	int 0x13
 	
 LABEL_CODE_LOADING_KERNEL:
+	mov ax,0x03
+	mov dx,0x0200
+	call @DispStr
 	mov byte dl,[LABEL_DATA_ROOTDIRECTORY_SIZE]
 	mov ax,MACRO_KERNEL_BASE
 	mov es,ax
@@ -89,14 +98,16 @@ LABEL_CODE_LOADING_KERNEL:
 	jmp .LABEL_CODE_MAIN
  .LABEL_CODE_FAIL:
 	xor ax,ax
-	mov al,0x02
+	mov al,0x04
+	mov dx,0x0300
 	call @DispStr
 
 	jmp $
 
 LABEL_CODE_READING_KERNEL:
 	xor ax,ax
-	mov al,0x01
+	mov al,0x05
+	mov dx,0x0400
 	call @DispStr
 	sub di,0x0b	
 	mov word ax,[es:di+0x1a]					
@@ -119,9 +130,13 @@ LABEL_CODE_READING_KERNEL:
 LABEL_CODE_JUMP_TO_KERNEL_PM:
 	call @KillMotor
 	xor ax,ax
-	mov al,0x03
+	mov al,0x06
+	mov dx,0x0500
 	call @DispStr
-
+	mov ax,0x07
+	mov dx,0x0600
+	call @DispStr
+	
 ; call int 15h
 LABEL_CODE_MEMCHK:
 	mov ax,cs
@@ -189,11 +204,18 @@ LABEL_DATA_AREA:
 	LABEL_DATA_ROOTDIRECTORY_NO:		db		MACRO_ROOTDIRECTORY_OFFSET
 	LABEL_DATA_FILENAME:				db		'KERNEL  BIN'
 
-	MACRO_DATA_MESSAGE_LENGTH			equ				9
-	LABEL_DATA_MESSAGE_START:			db			'         '
-	LABEL_DATA_MESSAGE_1:				db			'ReadingK '
-	LABEL_DATA_MESSAGE_2:				db			'NO Kernel'
-	LABEL_DATA_MESSAGE_3:				db			'ReadyToPM'
+	MACRO_DATA_MESSAGE_LENGTH			equ				42
+	LABEL_DATA_MESSAGE_START:			db			'                                          '
+	LABEL_DATA_MESSAGE_1:				db			'Executing in loader!                      '
+	LABEL_DATA_MESSAGE_2:				db			'Executing in 16-bit Mode!                 '
+	LABEL_DATA_MESSAGE_3:				db			'Finding kernel right now!                 '
+	LABEL_DATA_MESSAGE_4:				db			'Kernel dose not exist!                    '
+	LABEL_DATA_MESSAGE_5:				db			'Loading kernel into memory!               '
+	LABEL_DATA_MESSAGE_6:				db			'Be ready to jump to 32-bit protected Mode!'
+	LABEL_DATA_MESSAGE_7:				db			'Calling int 0x15 to check memory!         '
+	
+	;9000:0247
+
 
 	
 
@@ -201,11 +223,11 @@ LABEL_DATA_AREA:
 [BITS 32]
 LABEL_CODE_PMSTART:
 	;0x0008:0x0009038c
+
 	mov ax,LABEL_SelectorFlatRW
 	mov ds,ax
-;	mov ax,[ds:0x80000]
 	mov es,ax
-	mov gs,ax
+	;mov gs,ax
 	mov fs,ax
 	mov ss,ax
 	mov sp,MACRO_TOPOFSTACK
@@ -214,6 +236,15 @@ LABEL_CODE_PMSTART:
 	mov ah,0x0f
 	mov al,'!'
 	mov [gs:((80*0+39)*2)],ax
+
+
+
+
+
+
+
+
+
 	call @SetupPaging
 
 	call @InitKernel
@@ -367,6 +398,8 @@ LABEL_DATA32:
 		MACRO_PM_HIGH_LEN		equ			(MACRO_LOADER_BASE * 0x10)+LABEL_REAL_HIGH_LEN
 		MACRO_PM_TYPE			equ			(MACRO_LOADER_BASE * 0x10)+LABEL_REAL_TYPE
 	MACRO_PM_ARDS_BUF			equ			(MACRO_LOADER_BASE * 0x10)+LABEL_REAL_ARDS_BUF
+
+
 
 MACRO_DATA32_LEN			equ				$-LABEL_DATA32
 

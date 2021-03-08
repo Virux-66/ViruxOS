@@ -29,9 +29,10 @@
 	push ax 
 	push bx
 	push cx
-	push dx
+
 	push es
 	push bp
+	push dx
 
 	xor cx,cx
 	mov cx,MACRO_DATA_MESSAGE_LENGTH		;string length
@@ -40,14 +41,15 @@
 	mov bp,ax								;string offset
 	mov ax,cs
 	mov es,ax								;string base
-	mov dx,0x00								;disp pointer
+	;mov dx,0x00							;disp pointer
+	pop dx
 	mov bx,0x0007							;property
 	mov ax,0x1301							
 	int 0x10
 
 	pop bp
 	pop es
-	pop dx
+	;pop dx
 	pop cx
 	pop bx
 	pop ax
