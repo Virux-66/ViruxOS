@@ -14,12 +14,12 @@ BOOTER		=	booter/bootSector.bin booter/Loader.bin
 KERNEL		=	kernel/Kernel.bin
 OBJS		=	kernel/Kernel.o kernel/start.o kernel/global.o kernel/processDemo.o \
 kernel/lib/delay.o kernel/lib/dispInt.o kernel/lib/display.o kernel/lib/operatePort.o kernel/lib/string.o \
-kernel/lib/openIrq.o \
+kernel/lib/openIrq.o kernel/lib/interrupt.o\
 kernel/init/init8259A.o kernel/init/initDescriptor.o kernel/init/initIDT.o kernel/init/initLDTDescriptor.o \
-kernel/init/initPCB.o kernel/init/initTSSDescriptor.o kernel/init/initVariable.o kernel/init/init8253.o \
+kernel/init/initPCB.o kernel/init/initTSSDescriptor.o kernel/init/initVariable.o kernel/init/initClock.o \
 kernel/init/initKeyboard.o \
 kernel/interrupt/exceptionHandler.o kernel/interrupt/clockService.o kernel/interrupt/interruptHandler.o \
-kernel/interrupt/keyboardService.o \
+kernel/interrupt/keyboardService.o kernel/interrupt/keyboardResolution.o\
 kernel/syscall/getTicks.o kernel/syscall/getTicksService.o
 
 
@@ -73,7 +73,8 @@ kernel/lib/operatePort.o				:	kernel/lib/operatePort.asm
 											${ASM} ${ASMKFLAGS} -o $@ $<
 kernel/lib/string.o						:	kernel/lib/string.asm
 											${ASM} ${ASMKFLAGS} -o $@ $<
-
+kernel/lib/interrupt.o					:	kernel/lib/interrupt.asm
+											${ASM} ${ASMKFLAGS} -o $@ $<
 
 
 
@@ -81,7 +82,7 @@ kernel/lib/string.o						:	kernel/lib/string.asm
 
 
 #SourceCode/kernel/init
-kernel/init/init8253.o					:	kernel/init/init8253.c kernel/include/type.h kernel/include/global.h kernel/include/intVector.h kernel/include/prototype.h
+kernel/init/initClock.o					:	kernel/init/initClock.c kernel/include/type.h kernel/include/global.h kernel/include/intVector.h kernel/include/prototype.h
 											${CC} ${CFLAGS} -o $@ $<
 kernel/init/init8259A.o					:	kernel/init/init8259A.c kernel/include/type.h kernel/include/const.h kernel/include/prototype.h
 											${CC} ${CFLAGS} -o $@ $<
@@ -109,6 +110,8 @@ kernel/interrupt/interruptHandler.o		:	kernel/interrupt/interruptHandler.asm
 											${ASM} ${ASMKFLAGS} -o $@ $<
 kernel/interrupt/keyboardService.o      :   kernel/interrupt/keyboardService.c kernel/include/type.h kernel/include/global.h kernel/include/prototype.h
 											${CC} ${CFLAGS} -o $@ $<
+kernel/interrupt/keyboardResolution.o   :	kernel/interrupt/keyboardResolution.c kernel/include/type.h kernel/include/global.h kernel/include/prototype.h
+											${CC} ${CFLAGS} -o $@ $<						
 #SouceCode/kernel/syscall
 kernel/syscall/getTicks.o				:	kernel/syscall/getTicks.asm
 											${ASM} ${ASMKFLAGS} -o $@ $<

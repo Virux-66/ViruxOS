@@ -25,6 +25,8 @@ EXTERN PCB PCBTable[processNumber];
 
 EXTERN PCB* PCBready; //PCBready is in 0x08:0x344a0, which contains 0x3c4c0
 
+//EXTERN KB_INPUT kb_in;
+
 extern u8 processStack[]; //0x344c4
 
 extern TASK taskTable[];
@@ -32,3 +34,4 @@ extern TASK taskTable[];
 extern irqService irqServiceTable[];		//save irq service function pointer
 
 extern systemCall sysCallTable[];
+

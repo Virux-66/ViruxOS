@@ -22,14 +22,17 @@ PUBLIC	void cstart() {
 	base = (u32*)(&idtPos[2]);
 	*limit = IDTSIZE * sizeof(Gate) - 1;
 	*base = (u32)&idt;
+
 	initialize8259A();
-	init8253();
+	initClock();
+	initKeyboard();
+
 	initializeIDT();
 	initializeTSS();
 	tss.ss0 = SELECTOR_FLAT_RW;
 	initializeLDT();
 	initializePCB();
 	PCBready = PCBTable;
-	initKeyboard();
+
 }
 

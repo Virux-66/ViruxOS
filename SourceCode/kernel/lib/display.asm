@@ -34,7 +34,7 @@ dispStr:
 	inc al
 	xor ah,ah
 	mul bl
-	mov esi,eax
+	mov edi,eax
 	pop eax
 	jmp .1
  .2:	
@@ -77,7 +77,7 @@ dispColorStr:
 	inc al
 	xor ah,ah
 	mul bl
-	mov esi,eax
+	mov edi,eax
 	pop eax
 	jmp .1
  .2:	

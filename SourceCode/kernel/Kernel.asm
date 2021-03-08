@@ -43,5 +43,5 @@ csinit:								;0x08:0x3043a
 	pop ds
 	popad
 	add esp,4
-	int 0x21
+	;int 0x21
 	iretd

@@ -37,13 +37,18 @@ PUBLIC void initializeTSS();//initializeTSSDescriptorInGDT.c
 
 PUBLIC void initializeLDT();//initializeLDTDescriptorInGDT.c
 
-PUBLIC void init8253();//init8253.c
+PUBLIC void initClock();//initClock.c
 
 PUBLIC void initKeyboard();//initKeyboard.c
 
 PUBLIC void TestA();//processDemo.c
 
 PUBLIC void TestB();//processDemo.c
+
+PUBLIC void disableInt();
+
+PUBLIC void enableInt();
+
 
 
 //interrupt handler
@@ -117,6 +122,8 @@ PUBLIC void sys_call();
 PUBLIC void clockService(int irq);	//clockService.c
 
 PUBLIC void keyboardService(int irq);	//keyboardService.c
+
+PUBLIC void keyboardResolution();
 
 PUBLIC void spurious_irq(int irq);	//init8259A.c
 

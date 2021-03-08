@@ -14,4 +14,7 @@
 #define _8253_COUNTER2_PORT	0x42
 #define _8253_MCR_PORT		0x43
 
+#define _8242_BUFFER_PORT	0x60
+#define _8242_CONTROL_PORT	0x64
+
 #endif // !_PORT_H

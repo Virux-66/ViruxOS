@@ -23,13 +23,12 @@ PUBLIC void initialize8259A() {
 	writePort(INT_8259A_MASTER_PORT2, 0x01);	//ICW4
 	writePort(INT_8259A_SLAVE_PORT2, 0x01);	//ICW4
 
-	writePort(INT_8259A_MASTER_PORT2, 0xfe);	//OCW1
+	writePort(INT_8259A_MASTER_PORT2, 0xff);	//OCW1
 	writePort(INT_8259A_SLAVE_PORT2, 0xff);	//OCW1
-
+	//switch off all the interrupt
 	for (int i = 0; i < 16; i++) {
 		irqServiceTable[i] = spurious_irq;
 	}
-	irqServiceTable[0] = clockService;
 }
 
 PUBLIC void spurious_irq(int irq)
