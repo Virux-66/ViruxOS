@@ -49,7 +49,7 @@ extern sysCallTable
 	out INT_8259A_MASTER_PORT1 , al
 
 	sti
-	inc byte [gs:0]
+	;inc byte [gs:0]
 	push %1														;pass parameter
 	call [irqServiceTable+%1*4]									;the most important part for clock interrupt
 	pop ecx

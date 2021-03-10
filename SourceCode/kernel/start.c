@@ -10,7 +10,7 @@
 
 
 PUBLIC	void cstart() {
-	dispPos = 0;
+	//dispPos = 0;
 	newDescIndex = 4;
 	ticks = 0;
 	memcpy(&gdt, (void*)(*((u32*)(&gdtPos[2]))), *((u16*)(&gdtPos[0]))+1);
@@ -23,15 +23,25 @@ PUBLIC	void cstart() {
 	*limit = IDTSIZE * sizeof(Gate) - 1;
 	*base = (u32)&idt;
 
+	//dispStr(string1);
+	dispPos = 1600;
+	dispStr(string4);
 	initialize8259A();
 	initClock();
 	initKeyboard();
 
+	dispPos = 1760;
+	dispStr(string5);
 	initializeIDT();
+
 	initializeTSS();
 	tss.ss0 = SELECTOR_FLAT_RW;
 	initializeLDT();
 	initializePCB();
+
+	dispPos = 1920;
+	dispStr(string6);
+
 	PCBready = PCBTable;
 
 }

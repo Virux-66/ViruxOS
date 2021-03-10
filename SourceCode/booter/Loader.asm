@@ -8,6 +8,7 @@ MACRO_STACK_OFFSET		equ			0x100
 %include	"FAT12header.inc"
 %include	"ProtectMode.inc"
 
+
 ;;;;;;Global Descriptor Table
 LABEL_GDT:				Descriptor			0,				0,				0
 LABEL_DESC_FLAT_C:		Descriptor			0,			0xfffff,	MACRO_DA_32|MACRO_DA_4K|MACRO_DA_C_X|MACRO_DA_C_R|MACRO_DA_P|MACRO_DA_S
@@ -21,7 +22,6 @@ LABEL_GDTPOS:			dw			MACRO_GDTLEN-1
 LABEL_SelectorFlatC			equ			LABEL_DESC_FLAT_C-LABEL_GDT
 LABEL_SelectorFlatRW		equ			LABEL_DESC_FLAT_RW-LABEL_GDT
 LABEL_SelectorVideo			equ			LABEL_DESC_VIDEO-LABEL_GDT
-
 
 
 LABEL_CODE_ENTRY:
@@ -213,36 +213,20 @@ LABEL_DATA_AREA:
 	LABEL_DATA_MESSAGE_5:				db			'Loading kernel into memory!               '
 	LABEL_DATA_MESSAGE_6:				db			'Be ready to jump to 32-bit protected Mode!'
 	LABEL_DATA_MESSAGE_7:				db			'Calling int 0x15 to check memory!         '
-	
-	;9000:0247
 
-
-	
 
 [SECTION s32]
 [BITS 32]
 LABEL_CODE_PMSTART:
-	;0x0008:0x0009038c
 
 	mov ax,LABEL_SelectorFlatRW
 	mov ds,ax
 	mov es,ax
-	;mov gs,ax
 	mov fs,ax
 	mov ss,ax
 	mov sp,MACRO_TOPOFSTACK
 	mov ax,LABEL_SelectorVideo
 	mov gs,ax
-	mov ah,0x0f
-	mov al,'!'
-	mov [gs:((80*0+39)*2)],ax
-
-
-
-
-
-
-
 
 
 	call @SetupPaging

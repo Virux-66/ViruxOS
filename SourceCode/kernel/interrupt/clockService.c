@@ -10,13 +10,18 @@
 
 PUBLIC void clockService(int irq) {
 	ticks++;
-	dispStr("INT 0x20 happen!\n");
+	//dispStr("INT 0x20 happen!\n");
 	if (intReEnterFlag != 0) {
-		dispStr("Interrupt re-enter");
+		//dispStr("Interrupt re-enter");
 	}
-	PCBready++;
+	pcbSchedule();
+
+
+
+
+	/*PCBready++;
 	if (PCBready >= PCBTable + processNumber)
-		PCBready = PCBTable;
+		PCBready = PCBTable;*/
 }
 
 

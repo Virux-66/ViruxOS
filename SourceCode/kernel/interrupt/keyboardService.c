@@ -10,10 +10,9 @@
 #include "global.h"
 
 
-extern KB_INPUT kb_in;
+extern KB_INPUT kb_in;		//defined in initKeyboard.c
 //this handler just put inputed char into buffer
 PUBLIC void keyboardService(int irq) {
-	clear();
 	u8 scanCode = readPort(_8242_BUFFER_PORT);
 	if (kb_in.count < KB_IN_BYTES) {
 		*(kb_in.pHead) = scanCode;

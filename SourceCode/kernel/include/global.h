@@ -35,3 +35,29 @@ extern irqService irqServiceTable[];		//save irq service function pointer
 
 extern systemCall sysCallTable[];
 
+extern char string1[];
+
+extern char string2[];
+
+extern char string3[];
+
+extern char string4[];
+
+extern char string5[];
+
+extern char string6[];
+
+
+
+EXTERN int code_with_E0;
+EXTERN int shift_l ;
+EXTERN int shift_r ;
+EXTERN int alt_l;
+EXTERN int alt_r;
+EXTERN int ctrl_l;
+EXTERN int ctrl_r;
+EXTERN int caps_lock;
+EXTERN int num_lock;
+EXTERN int scroll_lock;
+EXTERN int column;
+

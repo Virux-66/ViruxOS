@@ -1,15 +1,17 @@
 %include "const.inc"
 
 extern	cstart			;function
+extern	dispStr			;function
 extern	gdtPos			;global variable
 extern	idtPos			;global variable
 extern	dispPos			;global variable
 extern  PCBready		;global variable
 extern	intReEnterFlag	;global variable
 extern	tss				;global variable
-
+extern	string1
+extern	string2
+extern	string3
 global LABEL_TOPOFSTACK
-global halt
 
 [SECTION .bss]
 LABEL_STACK_KERNEL:		resb		2*1024
@@ -18,9 +20,22 @@ LABEL_TOPOFSTACK:
 [SECTION .text]
 global _start
 
-_start:
-	mov esp,LABEL_TOPOFSTACK	;LABEL_TOPSTACK=0x32800  ss=0x10
-	;mov dword [dispPos],0x00	;label dispPos is 0x32800
+_start: ;0x08:0x30400
+	mov esp,LABEL_TOPOFSTACK	
+	mov dword [dispPos],1120
+
+	push dword string1
+	call dispStr
+	pop eax
+	mov dword [dispPos],1280
+	push dword string2
+	call dispStr
+	pop eax
+	mov dword [dispPos],1440
+	push dword string3
+	call dispStr
+	pop eax
+
 	mov dword [intReEnterFlag],0x00
 	sgdt [gdtPos]
 	call cstart

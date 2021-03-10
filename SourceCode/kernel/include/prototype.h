@@ -134,4 +134,7 @@ PUBLIC int getTicksService();
 
 
 PUBLIC void delayInMilli();//lib/delay.c
-#endif // !_PROtOTYPE_H
+
+PUBLIC void pcbSchedule();//pcbSchedule.c
+
+#endif // !_PROTOTYPE_H
