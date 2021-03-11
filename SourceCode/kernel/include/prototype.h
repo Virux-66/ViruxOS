@@ -45,6 +45,10 @@ PUBLIC void TestA();//processDemo.c
 
 PUBLIC void TestB();//processDemo.c
 
+PUBLIC void tty();//tty.c
+
+PUBLIC void keyProcess(u32);
+
 PUBLIC void disableInt();
 
 PUBLIC void enableInt();

@@ -11,19 +11,13 @@
 PUBLIC void TestA() {
 	int i = 0;
 	while (1) {
-		/*dispStr("A");
-		dispInt(i++);
-		dispStr(".");
-		delayInMilli(10);*/
+		dispStr("A");
 	}
 }
 
 PUBLIC void TestB() {
 	int i = 0x1000;
 	while (1) {
-		/*dispStr("B");
-		dispInt(i++);
-		dispStr(".");
-		delayInMilli(10);*/
+		dispStr("B");
 	}
 }

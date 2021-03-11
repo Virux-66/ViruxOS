@@ -1,7 +1,7 @@
 #ifndef _TASK_H
 #define _TASK_H
 
-#define taskNumber 2
+#define taskNumber 3
 typedef struct s_task {
 	taskFunction init_eip;
 	int stackSize;

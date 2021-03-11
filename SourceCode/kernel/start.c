@@ -41,7 +41,7 @@ PUBLIC	void cstart() {
 
 	dispPos = 1920;
 	dispStr(string6);
-
+	dispStr("\n");
 	PCBready = PCBTable;
 
 }

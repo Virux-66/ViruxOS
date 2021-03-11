@@ -9,5 +9,8 @@
 #include "global.h"
 
 PUBLIC void pcbSchedule() {
-
+	PCBready++;
+	if (PCBready >= PCBTable + processNumber) {
+		PCBready = PCBTable;
+	}
 }

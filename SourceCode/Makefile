@@ -12,14 +12,15 @@ LDFLAGS		=	-m elf_i386 -s -Ttext ${ENTRYPOINT}
 #TARGET
 BOOTER		=	booter/bootSector.bin booter/Loader.bin
 KERNEL		=	kernel/Kernel.bin
-OBJS		=	kernel/Kernel.o kernel/start.o kernel/global.o kernel/processDemo.o kernel/pcbSchedule.o\
+OBJS		=	kernel/Kernel.o kernel/start.o kernel/global.o kernel/processDemo.o kernel/pcbSchedule.o \
+kernel/tty.o \
 kernel/lib/delay.o kernel/lib/dispInt.o kernel/lib/display.o kernel/lib/operatePort.o kernel/lib/string.o \
-kernel/lib/openIrq.o kernel/lib/interrupt.o\
+kernel/lib/openIrq.o kernel/lib/interrupt.o \
 kernel/init/init8259A.o kernel/init/initDescriptor.o kernel/init/initIDT.o kernel/init/initLDTDescriptor.o \
 kernel/init/initPCB.o kernel/init/initTSSDescriptor.o kernel/init/initVariable.o kernel/init/initClock.o \
 kernel/init/initKeyboard.o \
 kernel/interrupt/exceptionHandler.o kernel/interrupt/clockService.o kernel/interrupt/interruptHandler.o \
-kernel/interrupt/keyboardService.o kernel/interrupt/keyboardResolution.o\
+kernel/interrupt/keyboardService.o kernel/interrupt/keyboardResolution.o \
 kernel/syscall/getTicks.o kernel/syscall/getTicksService.o
 
 
@@ -56,7 +57,8 @@ kernel/processDemo.o				:	kernel/processDemo.c kernel/include/type.h kernel/incl
 										${CC} ${CFLAGS} -o $@ $<
 kernel/pcbSchedule.o				:	kernel/pcbSchedule.c kernel/include/type.h kernel/include/prototype.h
 										${CC} ${CFLAGS} -o $@ $<
-										
+kernel/tty.o                        :   kernel/tty.c kernel/include/type.h kernel/include/prototype.h				
+										${CC} ${CFLAGS} -o $@ $<
 
 
 

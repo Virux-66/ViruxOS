@@ -23,7 +23,7 @@ EXTERN TSS tss;			//TSS defined in important.h
 
 EXTERN PCB PCBTable[processNumber];
 
-EXTERN PCB* PCBready; //PCBready is in 0x08:0x344a0, which contains 0x3c4c0
+EXTERN PCB* PCBready; 
 
 //EXTERN KB_INPUT kb_in;
 

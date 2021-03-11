@@ -1,6 +1,6 @@
 #ifndef _PROCESS_H_
 #define _PROCESS_H_
-#define processNumber 2
+#define processNumber 3
 #define processStackSize	0x8000
 
 typedef struct stackframe {
