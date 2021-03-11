@@ -36,7 +36,8 @@ PUBLIC void initializePCB() {
 		pPCB->stackframe.fs = 0x00;
 		pPCB->stackframe.fs = 0x08 | SA_LDT | SA_RPL1;
 		pPCB->stackframe.eip = (u32)task->init_eip;
-		pPCB->stackframe.esp=(u32)(processStack + sizeof(processStackSize)*(i+1));
+		pPCB->stackframe.esp = (u32)(processStack + processStackSize * i);
+
 		pPCB->stackframe.eflags = 0x1202;
 		pPCB->processID = i;
 		memcpy(&pPCB->processName, &(task->name), sizeof(task->name));

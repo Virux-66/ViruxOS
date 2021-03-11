@@ -11,13 +11,16 @@
 PUBLIC void TestA() {
 	int i = 0;
 	while (1) {
-		dispStr("A");
+		//dispStr("A");
+		//delayInMilli(100);
 	}
 }
 
 PUBLIC void TestB() {
 	int i = 0x1000;
 	while (1) {
-		dispStr("B");
+		//dispStr("B");
+		//delayInMilli(100);
+
 	}
 }

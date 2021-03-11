@@ -21,5 +21,5 @@ PUBLIC void keyboardService(int irq) {
 			kb_in.pHead = kb_in.buf;
 		kb_in.count++;
 	}
-	keyboardResolution();
+	//keyboardResolution();
 }

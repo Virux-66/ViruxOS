@@ -10,9 +10,9 @@
 #include "global.h"
 
 
-PUBLIC TASK taskTable[taskNumber]= { {TestA,0x8000,"TestA"},
-									{TestB,0x8000,"TestB"},
-									{tty,0x8000,"tty"} };
+PUBLIC TASK taskTable[processNumber]= {{TestA,0x8000,"TestA"},
+									{TestB,0x8000,"TestB"},{tty,0x8000,"tty"}};
+									
 PUBLIC irqService irqServiceTable[16];
 
 PUBLIC systemCall sysCallTable[16] = { getTicksService };// = {getTicksService};
