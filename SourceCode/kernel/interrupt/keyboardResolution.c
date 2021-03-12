@@ -49,7 +49,7 @@ PUBLIC void keyboardResolution() {
 				}
 			}
 
-			if (scanCode = 0xB7) {
+			if (scanCode == 0xB7) {
 				if (getByteFromKbuf() == 0xE0) {
 					if (getByteFromKbuf() == 0xAA) {
 						key = PRINTSCREEN;
@@ -57,7 +57,7 @@ PUBLIC void keyboardResolution() {
 					}
 				}
 			}
-			if (key = 0)
+			if (key == 0)
 				code_with_E0 = 1;
 		}
 		if ((key != PAUSEBREAK) && (key != PRINTSCREEN)) {

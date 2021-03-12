@@ -19,9 +19,11 @@
 
 //VGA registers
 #define CRT_CONTROLLER_ADDRESS_REGISTER			0x3D4
-#define CRT_CONTROLLER__DATA_REGISTER			0x3D5
+#define CRT_CONTROLLER_DATA_REGISTER			0x3D5
 #define CRT_CURSOR_H							0x0E	
 #define CRT_CURSOR_L							0x0F	//control the cursor position 16 bits
 #define CRT_START_ADDR_H						0x0C
 #define CRT_START_ADDR_L						0x0D
+#define V_MEM_BASE								0xB8000
+#define V_MEM_SIZE								0x8000
 #endif // !_PORT_H
