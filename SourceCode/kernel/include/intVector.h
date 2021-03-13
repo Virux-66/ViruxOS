@@ -1,8 +1,8 @@
 #ifndef _INTVECTOR_H
 #define _INTVECTOR_H
 
-#define MASTER_INT_NUM 0x20
-#define SLAVE_INT_NUM 0x28
+#define MASTER_INT_NUM		0x20
+#define SLAVE_INT_NUM		0x28
 
 #define INT_VECTOR_DE		0x00
 #define INT_VECTOR_DB		0x01

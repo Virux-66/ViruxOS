@@ -1,7 +1,21 @@
+#ifndef _GLOBAL_H
+#define _GLOBAL_H
+
 #ifdef _GLOBAL_VARIABLE
+
 #undef EXTERN
 #define EXTERN
+#else 
+#define EXTERN extern
 #endif
+
+#include "const.h"
+#include "type.h"
+#include "important.h"
+#include "process.h"
+#include "task.h"
+#include "console.h"
+#include "tty.h"
 
 EXTERN int dispPos;
 
@@ -47,7 +61,11 @@ extern char string5[];
 
 extern char string6[];
 
+extern TTY ttyTable[];
 
+extern CONSOLE consoleTable[];
+
+EXTERN int currentConsoleIndex;
 
 EXTERN int code_with_E0;
 EXTERN int shift_l ;
@@ -61,3 +79,4 @@ EXTERN int num_lock;
 EXTERN int scroll_lock;
 EXTERN int column;
 
+#endif

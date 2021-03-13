@@ -1,14 +1,7 @@
 #include "type.h"
-#include "port.h"
-#include "const.h"
-#include "intVector.h"
-#include "important.h"
-#include "process.h"
-#include "prototype.h"
-#include "task.h"
 #include "keyboard.h"
-#include "global.h"
-
+#include "port.h"
+#include "prototype.h"
 
 extern KB_INPUT kb_in;		//defined in initKeyboard.c
 //this handler just put inputed char into buffer
@@ -21,5 +14,4 @@ PUBLIC void keyboardService(int irq) {
 			kb_in.pHead = kb_in.buf;
 		kb_in.count++;
 	}
-	//keyboardResolution();
 }

@@ -1,10 +1,12 @@
 #ifndef	_KEYMAP_H_
 #define	_KEYMAP_H_
 
+#include "keyboard.h"
+#include "type.h"
 
 /* Keymap for US MF-2 keyboard. */
 
-u32 keymap[NR_SCAN_CODES * MAP_COLS] = {
+PRIVATE u32 keymap[NR_SCAN_CODES * MAP_COLS] = {
 
 	/* scan-code			!Shift		Shift		E0 XX	*/
 	/* ==================================================================== */

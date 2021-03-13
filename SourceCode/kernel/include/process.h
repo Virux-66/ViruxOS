@@ -1,7 +1,9 @@
 #ifndef _PROCESS_H_
 #define _PROCESS_H_
-#define processNumber 3
-#define processStackSize	0x8000
+
+#include "const.h"
+#include "type.h"
+#include "important.h"
 
 typedef struct stackframe {
 	u32 gs;

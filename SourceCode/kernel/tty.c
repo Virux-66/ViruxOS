@@ -1,33 +1,42 @@
 #include "type.h"
-#include "const.h"
-#include "intVector.h"
-#include "important.h"
-#include "process.h"
+#include "tty.h"
 #include "prototype.h"
-#include "task.h"
+#include "keyboard.h"
+#include "keymap.h"
 #include "global.h"
 #include "port.h"
-#include "keyboard.h"
-#include "color.h"
+
+#define TTY_FIRST ttyTable
+#define TTY_END	  ttyTable+consoleNumber
+
+PRIVATE void initTty(TTY* pTty);
+PRIVATE void ttyRead(TTY* pTty);
+PRIVATE void ttyWrite(TTY* pTty);
 
 PUBLIC void tty() {
-	dispColorStr("T", WORD_RED);
+	TTY* pTty;
+	for (pTty = TTY_FIRST; pTty < TTY_END; pTty++){
+		initTty(pTty);
+	}
+	currentConsoleIndex = 0;	//global variable
 	while (1) {
-		keyboardResolution();
-		disableInt();
-		writePort(CRT_CONTROLLER_ADDRESS_REGISTER, CRT_CURSOR_H);
-		writePort(CRT_CONTROLLER_DATA_REGISTER, (dispPos / 2) >> 8 & 0xFF);
-		writePort(CRT_CONTROLLER_ADDRESS_REGISTER, CRT_CURSOR_L);
-		writePort(CRT_CONTROLLER_DATA_REGISTER, (dispPos / 2)& 0xFF);
-		enableInt();
+		for (pTty = TTY_FIRST; pTty < TTY_END; pTty++) {
+			ttyRead(pTty);
+			ttyWrite(pTty);
+		}
 	}
 }
-//0x08:0x30490
-PUBLIC void keyProcess(u32 key) {
+
+PUBLIC void keyProcess(TTY* pTty,u32 key) {
 	char output[2] = { '\0','\0' };
 	if (!(key & FLAG_EXT)){
-		output[0] = key & 0xFF;
-		dispStr(output);
+		if (pTty->countBuf < TTY_BUF_BYTES) {//put char into tty buffer 
+			*(pTty->pHead) = key;
+			pTty->pHead++;
+			pTty->countBuf++;
+			if (pTty->pHead == pTty->inputBuf + TTY_BUF_BYTES)
+				pTty->pHead = pTty->inputBuf;
+		}
 	}
 	else {
 		int rawCode = key & MASK_RAW;
@@ -50,5 +59,28 @@ PUBLIC void keyProcess(u32 key) {
 		default:
 			break;
 		}
+	}
+}
+
+PRIVATE void initTty(TTY* pTty) {
+	pTty->countBuf = 0;
+	pTty->pHead = pTty->pTail = pTty->inputBuf;
+	int index = pTty - ttyTable;
+	pTty->pConsole = consoleTable + index;
+}
+
+PRIVATE void ttyRead(TTY* pTty) {
+	if (isCurrentConsole(pTty->pConsole)) {
+		keyboardResolution(pTty);
+	}
+}
+PRIVATE void ttyWrite(TTY* pTty) {
+	if (pTty->countBuf) {
+		char ch = *(pTty->pTail);
+		pTty->pTail++;
+		if (pTty->pTail == pTty->inputBuf + TTY_BUF_BYTES)
+			pTty->pTail = pTty->inputBuf;
+		pTty->countBuf--;
+		putChar(pTty->pConsole, ch);
 	}
 }

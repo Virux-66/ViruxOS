@@ -1,12 +1,11 @@
 #include "type.h"
-#include "port.h"
-#include "const.h"
-#include "intVector.h"
 #include "important.h"
+#include "const.h"
 #include "process.h"
-#include "prototype.h"
 #include "task.h"
+#include "prototype.h"
 #include "global.h"
+
 
 PUBLIC void initializePCB() {
 	u16 selectorLDT = SELECTOR_LDT_FIRST;
@@ -32,7 +31,7 @@ PUBLIC void initializePCB() {
 		pPCB->stackframe.ss = 0x00;
 		pPCB->stackframe.ss = 0x08 | SA_LDT | SA_RPL1;
 		pPCB->stackframe.gs = 0x00;
-		pPCB->stackframe.gs = (SELECTOR_VIDEO-0x03) | SA_GDT | SA_RPL1;//!!
+		pPCB->stackframe.gs = (SELECTOR_VIDEO-0x03) | SA_GDT | SA_RPL1;
 		pPCB->stackframe.fs = 0x00;
 		pPCB->stackframe.fs = 0x08 | SA_LDT | SA_RPL1;
 		pPCB->stackframe.eip = (u32)task->init_eip;

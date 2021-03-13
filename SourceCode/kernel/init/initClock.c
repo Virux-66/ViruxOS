@@ -1,12 +1,8 @@
 #include "type.h"
-#include "port.h"
-#include "const.h"
-#include "intVector.h"
-#include "important.h"
-#include "process.h"
 #include "prototype.h"
-#include "task.h"
+#include "port.h"
 #include "global.h"
+
 
 #define HZ			100     //100hz 10ms per clock interrupt
 #define TIMER_FREQ	1193182L

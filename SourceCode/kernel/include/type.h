@@ -15,10 +15,7 @@ typedef void* systemCall;
 
 #define	PUBLIC
 #define	PRIVATE	static
-#define EXTERN extern
-
-
-
+#define EXTERN	extern
 
 
 

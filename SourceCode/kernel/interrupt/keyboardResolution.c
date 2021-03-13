@@ -1,20 +1,15 @@
 #include "type.h"
-#include "port.h"
-#include "const.h"
-#include "intVector.h"
-#include "important.h"
-#include "process.h"
-#include "prototype.h"
-#include "task.h"
-#include "global.h"
+#include "tty.h"
 #include "keyboard.h"
+#include "global.h"
+#include "prototype.h"
 #include "keymap.h"
 
-extern KB_INPUT kb_in;		//defined in initKeyboard.c
+extern KB_INPUT kb_in;		//defined in initKeyboard.c keyboard input buffer:public section
 
 PRIVATE u8 getByteFromKbuf();
 
-PUBLIC void keyboardResolution() {
+PUBLIC void keyboardResolution(TTY* pTty) {
 	u8 scanCode;
 	int make;			//this variable is to decide if make code
 	u32 key = 0;		//ascii in keymap.h
@@ -108,7 +103,7 @@ PUBLIC void keyboardResolution() {
 				key |= (ctrl_r ? FLAG_CTRL_R : 0);
 				key |= (alt_l ? FLAG_ALT_L : 0);
 				key |= (alt_r ? FLAG_ALT_R : 0);
-				keyProcess(key);
+				keyProcess(pTty,key);
 			}
 		}
 	}

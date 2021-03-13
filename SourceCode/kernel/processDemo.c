@@ -1,12 +1,5 @@
 #include "type.h"
-#include "const.h"
-#include "intVector.h"
-#include "important.h"
-#include "process.h"
-#include "prototype.h"
-#include "task.h"
-#include "global.h"
-#include "port.h"
+
 
 PUBLIC void TestA() {
 	int i = 0;
@@ -21,6 +14,5 @@ PUBLIC void TestB() {
 	while (1) {
 		//dispStr("B");
 		//delayInMilli(100);
-
 	}
 }

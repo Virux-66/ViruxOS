@@ -1,14 +1,10 @@
 #define _GLOBAL_VARIABLE
-#include "type.h"
-#include "port.h"
-#include "const.h"
-#include "intVector.h"
-#include "important.h"
-#include "process.h"
-#include "prototype.h"
-#include "task.h"
-#include "global.h"
 
+#include "type.h"
+#include "task.h"
+#include "const.h"
+#include "prototype.h"
+#include "global.h"
 
 PUBLIC TASK taskTable[processNumber]= {{TestA,0x8000,"TestA"},
 									{TestB,0x8000,"TestB"},{tty,0x8000,"tty"}};
@@ -30,3 +26,7 @@ PUBLIC char string4[] = "Initialize 8259A programmable interrupt control!";
 PUBLIC char string5[] = "Initialize interrupt descriptor table(IDT)!";
 
 PUBLIC char string6[] = "Start the first process: TextA!";
+
+PUBLIC TTY ttyTable[consoleNumber];
+
+PUBLIC CONSOLE consoleTable[consoleNumber];

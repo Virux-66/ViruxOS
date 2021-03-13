@@ -7,7 +7,7 @@
 #define		WORD_RED		0x04
 #define		WORD_BROWN		0x06
 #define 	WORD_WHITE		0x07
-
+#define		DEFAULT_COLOR	WORD_WHITE
 
 
 #endif // !_COLOR_H

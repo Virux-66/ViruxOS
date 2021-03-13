@@ -1,12 +1,9 @@
 #include "type.h"
-#include "port.h"
-#include "const.h"
-#include "intVector.h"
 #include "important.h"
-#include "process.h"
-#include "prototype.h"
-#include "task.h"
 #include "global.h"
+#include "intVector.h"
+#include "prototype.h"
+
 
 PRIVATE void initializeIdtDesc(unsigned char vector, u8 type,
 	intHandler	handler, unsigned char privilege) {

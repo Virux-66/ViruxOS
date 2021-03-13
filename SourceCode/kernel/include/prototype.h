@@ -1,5 +1,10 @@
 #ifndef _PROTOTYPE_H
 #define _PROTOTYPE_H
+
+#include "type.h"
+#include "tty.h"
+#include "important.h"
+#include "console.h"
 //string.asm
 PUBLIC void* memcpy(void* dest, void* source, int size); 
 
@@ -47,7 +52,7 @@ PUBLIC void TestB();//processDemo.c
 
 PUBLIC void tty();//tty.c
 
-PUBLIC void keyProcess(u32);
+PUBLIC void keyProcess(TTY* pTty,u32 key);
 
 PUBLIC void disableInt();
 
@@ -127,7 +132,8 @@ PUBLIC void clockService(int irq);	//clockService.c
 
 PUBLIC void keyboardService(int irq);	//keyboardService.c
 
-PUBLIC void keyboardResolution();
+PUBLIC void keyboardResolution(TTY* pTty);
+
 
 PUBLIC void spurious_irq(int irq);	//init8259A.c
 
@@ -140,5 +146,11 @@ PUBLIC int getTicksService();
 PUBLIC void delayInMilli();//lib/delay.c
 
 PUBLIC void pcbSchedule();//pcbSchedule.c
+
+
+PUBLIC int isCurrentConsole(CONSOLE* pConsole); //console.c
+
+PUBLIC void putChar(CONSOLE* pConsole, char ch);
+
 
 #endif // !_PROTOTYPE_H
