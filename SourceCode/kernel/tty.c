@@ -12,13 +12,14 @@
 PRIVATE void initTty(TTY* pTty);
 PRIVATE void ttyRead(TTY* pTty);
 PRIVATE void ttyWrite(TTY* pTty);
+PRIVATE void putKeyIntoBuf(TTY* pTty, u32 key);
 
 PUBLIC void tty() {
 	TTY* pTty;
 	for (pTty = TTY_FIRST; pTty < TTY_END; pTty++){
 		initTty(pTty);
 	}
-	currentConsoleIndex = 0;	//global variable
+	switchOverConsole(0);
 	while (1) {
 		for (pTty = TTY_FIRST; pTty < TTY_END; pTty++) {
 			ttyRead(pTty);
@@ -30,32 +31,44 @@ PUBLIC void tty() {
 PUBLIC void keyProcess(TTY* pTty,u32 key) {
 	char output[2] = { '\0','\0' };
 	if (!(key & FLAG_EXT)){
-		if (pTty->countBuf < TTY_BUF_BYTES) {//put char into tty buffer 
-			*(pTty->pHead) = key;
-			pTty->pHead++;
-			pTty->countBuf++;
-			if (pTty->pHead == pTty->inputBuf + TTY_BUF_BYTES)
-				pTty->pHead = pTty->inputBuf;
-		}
+		putKeyIntoBuf(pTty, key);
 	}
 	else {
 		int rawCode = key & MASK_RAW;
-		switch (rawCode) {
+		switch (rawCode) {//scroll through the screen
+		case ENTER:
+			putKeyIntoBuf(pTty, '\n');
+			break;
+		case BACKSPACE:
+			putKeyIntoBuf(pTty, '\b');
+			break;
 		case UP:
 			if ((key & FLAG_SHIFT_L) || (key & FLAG_SHIFT_R)) {
-				disableInt();
-				writePort(CRT_CONTROLLER_ADDRESS_REGISTER, CRT_START_ADDR_H);
-				writePort(CRT_CONTROLLER_DATA_REGISTER, ((80 * 15) >> 8) & 0xFF);
-				writePort(CRT_CONTROLLER_ADDRESS_REGISTER, CRT_START_ADDR_L);
-				writePort(CRT_CONTROLLER_DATA_REGISTER, (80 * 15) & 0xFF);
-				enableInt();
+				scrollScreen(pTty->pConsole, SCR_UP);
 			}
 			break;
 		case DOWN:
 			if ((key & FLAG_SHIFT_L) || (key & FLAG_SHIFT_R)) {
-				/* shift+Down do nothing*/
+				scrollScreen(pTty->pConsole, SCR_DW);
 			}
 			break;
+		case F1:
+		case F2:
+		case F3:
+		case F4:
+		case F5:
+		case F6:
+		case F7:
+		case F8:
+		case F9:
+		case F10:
+		case F11:
+		case F12:
+			if ((key & FLAG_ALT_L) || (key & FLAG_ALT_R)) {
+				switchOverConsole(rawCode - F1);
+			}
+			break;
+
 		default:
 			break;
 		}
@@ -65,8 +78,8 @@ PUBLIC void keyProcess(TTY* pTty,u32 key) {
 PRIVATE void initTty(TTY* pTty) {
 	pTty->countBuf = 0;
 	pTty->pHead = pTty->pTail = pTty->inputBuf;
-	int index = pTty - ttyTable;
-	pTty->pConsole = consoleTable + index;
+	initConsole(pTty);
+
 }
 
 PRIVATE void ttyRead(TTY* pTty) {
@@ -74,6 +87,7 @@ PRIVATE void ttyRead(TTY* pTty) {
 		keyboardResolution(pTty);
 	}
 }
+
 PRIVATE void ttyWrite(TTY* pTty) {
 	if (pTty->countBuf) {
 		char ch = *(pTty->pTail);
@@ -82,5 +96,15 @@ PRIVATE void ttyWrite(TTY* pTty) {
 			pTty->pTail = pTty->inputBuf;
 		pTty->countBuf--;
 		putChar(pTty->pConsole, ch);
+	}
+}
+
+PRIVATE void putKeyIntoBuf(TTY* pTty, u32 key) {
+	if (pTty->countBuf < TTY_BUF_BYTES) {
+		*(pTty->pHead) = key;
+		pTty->pHead++;
+		if (pTty->pHead == pTty->inputBuf + TTY_BUF_BYTES)
+			pTty->pHead = pTty->inputBuf;
+		pTty->countBuf++;
 	}
 }

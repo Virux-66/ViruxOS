@@ -28,6 +28,7 @@ PUBLIC void initializeIDT();//initilizeIDT.c
 
 PUBLIC void initializeDescriptor(Descriptor* pointer, u32 base, u32 limit, u16 attribute);//initializeDescriptor.c
 //operatePort.asm
+
 PUBLIC u8 readPort(u16 port);
 
 PUBLIC void disableIrq(int irq);
@@ -147,10 +148,14 @@ PUBLIC void delayInMilli();//lib/delay.c
 
 PUBLIC void pcbSchedule();//pcbSchedule.c
 
-
-PUBLIC int isCurrentConsole(CONSOLE* pConsole); //console.c
+//console.c
+PUBLIC int isCurrentConsole(CONSOLE* pConsole); 
 
 PUBLIC void putChar(CONSOLE* pConsole, char ch);
 
+PUBLIC void initConsole(TTY* pTty);
 
+PUBLIC void switchOverConsole(int consoleIndex);
+
+PUBLIC void scrollScreen(CONSOLE* pConsole, int direction);
 #endif // !_PROTOTYPE_H
