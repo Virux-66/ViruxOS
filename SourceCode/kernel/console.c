@@ -10,7 +10,7 @@ PRIVATE void setCursor(unsigned int position);
 
 PRIVATE void setScreenStartAddr(unsigned int startAddr);
 
-PRIVATE void flush(CONSOLE* pConsole);
+PRIVATE void reset(CONSOLE* pConsole);
 
 PUBLIC int isCurrentConsole(CONSOLE* pConsole) {
 	return (pConsole == &consoleTable[currentConsoleIndex]);
@@ -52,7 +52,7 @@ PUBLIC void putChar(CONSOLE* pConsole, char ch) {// display char or string accor
 	/*while (pConsole->cursor >= pConsole->currentStartAddr + SCREEN_SIZE) {
 		scrollScreen(pConsole, SCR_UP);
 	}*/
-	flush(pConsole);
+	reset(pConsole);
 }
 
 PUBLIC void initConsole(TTY* pTty) {
@@ -123,7 +123,7 @@ and one character occupies two bytes.
 */
 }
 
-PRIVATE void flush(CONSOLE* pConsole) {
+PRIVATE void reset(CONSOLE* pConsole) {
 	setCursor(pConsole->cursor * 2);
 	setScreenStartAddr(pConsole->currentStartAddr);
 }

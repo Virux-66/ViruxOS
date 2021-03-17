@@ -138,6 +138,7 @@ PUBLIC void keyboardResolution(TTY* pTty);
 
 PUBLIC void spurious_irq(int irq);	//init8259A.c
 
+PUBLIC void setled();//initKeyboard.c
 
 //syscall
 PUBLIC int getTicks();

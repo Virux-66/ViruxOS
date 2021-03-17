@@ -104,6 +104,11 @@
 #define PAD_MID		PAD_5			/* Middle key	*/
 #define PAD_DEL		PAD_DOT			/* Del		*/
 
+#define KB_ACK		0xFA
+
+#define LED_CODE	0xED
+
+
 typedef struct s_kb {
 	char* pHead;
 	char* pTail;

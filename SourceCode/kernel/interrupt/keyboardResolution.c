@@ -9,7 +9,7 @@ extern KB_INPUT kb_in;		//defined in initKeyboard.c keyboard input buffer:public
 
 PRIVATE u8 getByteFromKbuf();
 
-PUBLIC void keyboardResolution(TTY* pTty) {
+PUBLIC void keyboardResolution(TTY* pTty) {//standard resolution
 	u8 scanCode;
 	int make;			//this variable is to decide if make code
 	u32 key = 0;		//ascii in keymap.h
@@ -59,8 +59,16 @@ PUBLIC void keyboardResolution(TTY* pTty) {
 			make = (scanCode & 0x80 ? 0 : 1);
 			keyrow = &keymap[(scanCode & 0x7F) * MAP_COLS];
 			column = 0;
-			if (shift_l || shift_r)
+
+			int caps = shift_l || shift_r;
+			if (caps_lock) {
+				if ((keyrow[0] >= 'a') && (keyrow[1] <= 'z'))
+					caps = !caps;
+			}
+			if (caps) {
 				column = 1;
+			}
+
 			if (code_with_E0) {
 				column = 2;
 				code_with_E0 = 0;
@@ -91,18 +99,95 @@ PUBLIC void keyboardResolution(TTY* pTty) {
 				alt_r = make;
 				key = 0;
 				break;
+			case CAPS_LOCK:
+				if (make) {
+					caps_lock = !caps_lock;
+					setled();
+				}
+			case NUM_LOCK:
+				if (make) {
+					num_lock = !num_lock;
+					setled();
+				}
+			case SCROLL_LOCK:
+				if (make) {
+					scroll_lock = !scroll_lock;
+					setled();
+				}
 			default:
-				if (!make)
-					key = 0;
 				break;
 			}
 			if (make) {
-				key |= (shift_l ? FLAG_SHIFT_L : 0);
-				key |= (shift_r ? FLAG_SHIFT_R : 0);
-				key |= (ctrl_l ? FLAG_CTRL_L : 0);
-				key |= (ctrl_r ? FLAG_CTRL_R : 0);
-				key |= (alt_l ? FLAG_ALT_L : 0);
-				key |= (alt_r ? FLAG_ALT_R : 0);
+				int pad = 0;
+				if ((key >= PAD_SLASH) && (key <= PAD_9)) {
+					pad = 1;
+					switch (key) {
+					case PAD_SLASH:
+						key = '/';
+						break;
+					case PAD_STAR:
+						key = '*';
+						break;
+					case PAD_MINUS:
+						key = '-';
+						break;
+					case PAD_PLUS:
+						key = '+';
+						break;
+					case PAD_ENTER:
+						key = ENTER;
+						break;
+					default:
+						if (num_lock && (key >= PAD_0) && (key <= PAD_9)) {
+							key = key - PAD_0 + '0';
+						}
+						else if (num_lock && (key == PAD_DOT)) {
+							key = '.';
+						}
+						else {
+							switch (key) {
+							case PAD_HOME:
+								key = HOME;
+								break;
+							case PAD_END:
+								key = END;
+								break;
+							case PAD_PAGEUP:
+								key = PAGEUP;
+								break;
+							case PAD_PAGEDOWN:
+								key = PAGEDOWN;
+								break;
+							case PAD_UP:
+								key = UP;
+								break;
+							case PAD_DOWN:
+								key = DOWN;
+								break;
+							case PAD_LEFT:
+								key = LEFT;
+								break;
+							case PAD_RIGHT:
+								key = RIGHT;
+								break;
+							case PAD_DOT:
+								key = DELETE;
+								break;
+							default:
+								break;
+							}
+						}
+						break;
+					}
+
+				}
+				key |= shift_l ? FLAG_SHIFT_L : 0;
+				key |= shift_r ? FLAG_SHIFT_R : 0;
+				key |= ctrl_l  ? FLAG_CTRL_L  : 0;
+				key |= ctrl_r  ? FLAG_CTRL_R  : 0;
+				key |= alt_l   ? FLAG_ALT_L   : 0;
+				key |= alt_r   ? FLAG_ALT_R   : 0;
+				key |= pad ? FLAG_PAD : 0;
 				keyProcess(pTty,key);
 			}
 		}

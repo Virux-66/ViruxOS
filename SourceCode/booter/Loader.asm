@@ -39,7 +39,7 @@ LABEL_CODE_ENTRY:
 	mov dx,0x0100
 	call @DispStr
 
-LABEL_CODE_FLOOPYDRIVER_RESET:
+LABEL_CODE_FLOOPYDRIVER_RESET: ;软驱复位
 	xor ah,ah
 	xor dl,dl
 	int 0x13
@@ -128,7 +128,7 @@ LABEL_CODE_READING_KERNEL:
 	cmp ax,0x0fff
 	jnz .LABEL_CODE_READING_KERNEL_ACCORDINGTO_CLUSTER	
 LABEL_CODE_JUMP_TO_KERNEL_PM:
-	call @KillMotor
+	call @KillMotor		;关闭驱动马达
 	xor ax,ax
 	mov al,0x06
 	mov dx,0x0500
