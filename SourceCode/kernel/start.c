@@ -37,7 +37,9 @@ PUBLIC	void cstart() {
 	dispPos = 1920;
 	dispStr(string6);
 	dispStr("\n");
-	PCBready = PCBTable;
+	PCBready = PCBTable+1;
 
 }
 
+//0x9000:0x02d1
+//0x08:0x3049a

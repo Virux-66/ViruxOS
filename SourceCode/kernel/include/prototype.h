@@ -51,6 +51,8 @@ PUBLIC void TestA();//processDemo.c
 
 PUBLIC void TestB();//processDemo.c
 
+PUBLIC void TestC();
+
 PUBLIC void tty();//tty.c
 
 PUBLIC void keyProcess(TTY* pTty,u32 key);

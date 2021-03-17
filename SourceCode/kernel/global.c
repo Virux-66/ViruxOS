@@ -6,14 +6,17 @@
 #include "prototype.h"
 #include "global.h"
 
-PUBLIC TASK taskTable[processNumber]= {{TestA,0x8000,"TestA"},
-									{TestB,0x8000,"TestB"},{tty,0x8000,"tty"}};
-									
+PUBLIC TASK taskTable[taskNumber]= {{tty,0x8000,"tty"} };
+							
+PUBLIC TASK userProcessTable[userProcessNumber] = { {TestA,0x8000,"TestA"},
+												{TestB,0x8000,"TestB"},
+												{TestC,0x8000,"TestC"}   };
+											
 PUBLIC irqService irqServiceTable[16];
 
 PUBLIC systemCall sysCallTable[16] = { getTicksService };// = {getTicksService};
 
-PUBLIC u8 processStack[processStackSize * processNumber];
+PUBLIC u8 processStack[processStackSize * (userProcessNumber+taskNumber)];
 
 PUBLIC char string1[] = "Executing in kernel!";
 

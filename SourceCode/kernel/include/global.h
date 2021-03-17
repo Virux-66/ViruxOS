@@ -35,7 +35,7 @@ EXTERN Gate idt[IDTSIZE];//this array is stored in 0x00032c40
 
 EXTERN TSS tss;			//TSS defined in important.h
 
-EXTERN PCB PCBTable[processNumber];
+EXTERN PCB PCBTable[userProcessNumber+taskNumber];
 
 EXTERN PCB* PCBready; 
 
@@ -43,7 +43,9 @@ EXTERN PCB* PCBready;
 
 extern u8 processStack[]; //0x344c4
 
-extern TASK taskTable[];
+extern TASK taskTable[];//RING1
+
+extern TASK userProcessTable[];//RING3
 
 extern irqService irqServiceTable[];		//save irq service function pointer
 

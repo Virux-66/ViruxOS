@@ -4,7 +4,7 @@
 
 PUBLIC void pcbSchedule() {
 	PCBready++;
-	if (PCBready >= PCBTable + processNumber) {
+	if (PCBready >= PCBTable + userProcessNumber+taskNumber) {
 		PCBready = PCBTable;
 	}
 }

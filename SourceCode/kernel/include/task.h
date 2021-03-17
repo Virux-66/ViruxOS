@@ -3,7 +3,6 @@
 
 #include "type.h"
 
-#define processkNumber 3
 typedef struct s_task {
 	taskFunction init_eip;
 	int stackSize;

@@ -7,8 +7,11 @@
 #define MASTER_INT_NUM 0x20
 #define SLAVE_INT_NUM 0x28
 
-#define processNumber 3
+#define userProcessNumber 3
+
 #define processStackSize	0x8000
+
+#define taskNumber	1
 
 #define consoleNumber 3
 

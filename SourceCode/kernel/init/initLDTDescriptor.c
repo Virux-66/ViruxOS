@@ -8,7 +8,7 @@
 PUBLIC void initializeLDT() {
 	Descriptor* target = &gdt[INDEX_LDT_FIRST];
 	PCB* pointer = PCBTable;
-	for (int i = 0; i < processNumber; i++) {
+	for (int i = 0; i < userProcessNumber+taskNumber; i++) {
 		u32 base = (u32)gdt[INDEX_FLAT_RW].baseLow;
 		base = base | (gdt[INDEX_FLAT_RW].basehigh1 << 16);
 		base = base | (gdt[INDEX_FLAT_RW].baseHigh2 << 24);

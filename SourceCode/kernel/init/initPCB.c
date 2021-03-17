@@ -9,36 +9,53 @@
 
 PUBLIC void initializePCB() {
 	u16 selectorLDT = SELECTOR_LDT_FIRST;
+	PCB*  pPCB;
+	TASK* pTask;
+	u8 descPrivilege;
+	u8 rpl;
+	int eflags;
 
-	for (int i = 0; i < processNumber; i++) {
-		PCB* pPCB = &PCBTable[i];
-		TASK* task = &taskTable[i];
-
-		pPCB->ldtSelector = selectorLDT;
-		selectorLDT += 8;
-		memcpy(&pPCB->ldt[0], &gdt[1], sizeof(Descriptor));
-		pPCB->ldt[0].attr1 = DA_P | (PRIVILEGE_RING1 << 5) | DA_S | DA_C_X | DA_C_R;
-		memcpy(&pPCB->ldt[1], &gdt[2], sizeof(Descriptor));
-		pPCB->ldt[1].attr1 = DA_P | (PRIVILEGE_RING1 << 5) | DA_S | DA_D_0 | DA_D_W;
-		//pPCB->ldt[1].limitHigh_attr2 =0xcf;
-		//initialize segment register,selector connected to LDT
-		pPCB->stackframe.cs = 0x00;
-		pPCB->stackframe.cs = SA_LDT | SA_RPL1;
-		pPCB->stackframe.ds = 0x00;
-		pPCB->stackframe.ds = 0x08 | SA_LDT | SA_RPL1;
-		pPCB->stackframe.es = 0x00;
-		pPCB->stackframe.es = 0x08 | SA_LDT | SA_RPL1;
-		pPCB->stackframe.ss = 0x00;
-		pPCB->stackframe.ss = 0x08 | SA_LDT | SA_RPL1;
-		pPCB->stackframe.gs = 0x00;
-		pPCB->stackframe.gs = (SELECTOR_VIDEO-0x03) | SA_GDT | SA_RPL1;
-		pPCB->stackframe.fs = 0x00;
-		pPCB->stackframe.fs = 0x08 | SA_LDT | SA_RPL1;
-		pPCB->stackframe.eip = (u32)task->init_eip;
-		pPCB->stackframe.esp = (u32)(processStack + processStackSize * i);
-
-		pPCB->stackframe.eflags = 0x1202;
+	for (int i = 0; i < taskNumber + userProcessNumber; i++) {
+		pPCB = PCBTable + i;
+		if (i < taskNumber){
+			pTask = taskTable + i;
+			descPrivilege = PRIVILEGE_RING1;
+			rpl = PRIVILEGE_RING1;
+			eflags = 0x1202;
+		}
+		else {
+			pTask = userProcessTable + i-taskNumber;
+			descPrivilege = PRIVILEGE_RING3;
+			rpl = PRIVILEGE_RING3;
+			eflags = 0x202;
+		}
+		memcpy(pPCB->processName, pTask->name, sizeof(pTask->name));
 		pPCB->processID = i;
-		memcpy(&pPCB->processName, &(task->name), sizeof(task->name));
+		pPCB->ldtSelector = selectorLDT;
+		memcpy(&pPCB->ldt[0], &gdt[1], sizeof(Descriptor));
+		pPCB->ldt[0].attr1 = DA_P | (descPrivilege << 5) | DA_S | DA_C_X | DA_C_R|DA_C_C;
+		memcpy(&pPCB->ldt[1], &gdt[2], sizeof(Descriptor));
+		pPCB->ldt[1].attr1 = DA_P | (descPrivilege << 5) | DA_S | DA_D_0 | DA_D_W;
+
+		//pPCB->stackframe.cs = 0x00;
+		pPCB->stackframe.cs = SA_LDT | rpl;
+		//pPCB->stackframe.ds = 0x00;
+		pPCB->stackframe.ds = 0x08 | SA_LDT | rpl;
+		//pPCB->stackframe.es = 0x00;
+		pPCB->stackframe.es = 0x08 | SA_LDT | rpl;
+		//pPCB->stackframe.ss = 0x00;
+		pPCB->stackframe.ss = 0x08 | SA_LDT | rpl;
+		//pPCB->stackframe.gs = 0x00;
+		pPCB->stackframe.gs = (SELECTOR_VIDEO-0x03) | SA_GDT | rpl;
+		//pPCB->stackframe.fs = 0x00;
+		pPCB->stackframe.fs = 0x08 | SA_LDT | rpl;
+		pPCB->stackframe.eip = (u32)pTask->init_eip;
+		pPCB->stackframe.esp = (u32)(processStack + processStackSize * (userProcessNumber+taskNumber-i));
+
+		pPCB->stackframe.eflags = eflags;
+		
+		pPCB++;
+		pTask++;
+		selectorLDT += 8;
 	}
 }
