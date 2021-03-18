@@ -21,7 +21,7 @@ kernel/init/initPCB.o kernel/init/initTSSDescriptor.o kernel/init/initVariable.o
 kernel/init/initKeyboard.o \
 kernel/interrupt/exceptionHandler.o kernel/interrupt/clockService.o kernel/interrupt/interruptHandler.o \
 kernel/interrupt/keyboardService.o kernel/interrupt/keyboardResolution.o \
-kernel/syscall/getTicks.o kernel/syscall/getTicksService.o
+kernel/syscall/getTicks.o kernel/syscall/getTicksService.o kernel/syscall/write.o kernel/syscall/writeService.o
 
 
 .PHONY		:	all everything cleanAllBin cleanAllO buildImg
@@ -122,3 +122,8 @@ kernel/syscall/getTicks.o				:	kernel/syscall/getTicks.asm
 											${ASM} ${ASMKFLAGS} -o $@ $<
 kernel/syscall/getTicksService.o        :	kernel/syscall/getTicksService.c 
 											${CC} ${CFLAGS} -o $@ $<
+kernel/syscall/write.o					:	kernel/syscall/write.asm
+											${ASM} ${ASMKFLAGS} -o $@ $<
+kernel/syscall/writeService.o           :	kernel/syscall/writeService.c
+											${CC} ${CFLAGS} -o $@ $<
+

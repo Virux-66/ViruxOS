@@ -1,9 +1,11 @@
 #include "type.h"
 #include "prototype.h"
+#include "global.h"
 
 PUBLIC void TestA() {
 	int i = 0;
-	dispStr("A");
+	newDescIndex = 16;
+	//dispStr("A");
 	while (1) {
 		//dispStr("A");
 		delayInMilli(100);

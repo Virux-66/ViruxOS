@@ -12,7 +12,6 @@
 PRIVATE void initTty(TTY* pTty);
 PRIVATE void ttyRead(TTY* pTty);
 PRIVATE void ttyWrite(TTY* pTty);
-PRIVATE void putKeyIntoBuf(TTY* pTty, u32 key);
 
 PUBLIC void tty() {
 	TTY* pTty;
@@ -99,7 +98,7 @@ PRIVATE void ttyWrite(TTY* pTty) {
 	}
 }
 
-PRIVATE void putKeyIntoBuf(TTY* pTty, u32 key) {
+PUBLIC void putKeyIntoBuf(TTY* pTty, u32 key) {
 	if (pTty->countBuf < TTY_BUF_BYTES) {
 		*(pTty->pHead) = key;
 		pTty->pHead++;

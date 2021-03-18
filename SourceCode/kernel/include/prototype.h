@@ -5,6 +5,7 @@
 #include "tty.h"
 #include "important.h"
 #include "console.h"
+#include "process.h"
 //string.asm
 PUBLIC void* memcpy(void* dest, void* source, int size); 
 
@@ -145,7 +146,8 @@ PUBLIC void setled();//initKeyboard.c
 //syscall
 PUBLIC int getTicks();
 PUBLIC int getTicksService();
-
+PUBLIC int write(char* p,int length);
+PUBLIC int writeService(char* buf,int length,PCB* pPCB);
 
 PUBLIC void delayInMilli();//lib/delay.c
 
@@ -161,4 +163,10 @@ PUBLIC void initConsole(TTY* pTty);
 PUBLIC void switchOverConsole(int consoleIndex);
 
 PUBLIC void scrollScreen(CONSOLE* pConsole, int direction);
+
+PUBLIC char* itoa(char* str, int num);//dispInt.c
+
+PUBLIC int printf(const char* fmt, ...);
+
+PUBLIC void putKeyIntoBuf(TTY* pTty, u32 key);
 #endif // !_PROTOTYPE_H

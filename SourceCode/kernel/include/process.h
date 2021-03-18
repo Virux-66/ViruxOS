@@ -31,6 +31,7 @@ typedef struct processControlBlock {
 	u16 ldtSelector;		//this selector is connected to gdt
 	Descriptor ldt[LDTSIZE]; //LDTSIZE defined in const.h  0x3c50a
 	u32 processID;
+	int ttyIndex;
 	char processName[32];
 }PCB;
 

@@ -2,7 +2,7 @@
 #include "prototype.h"
 
 
-PRIVATE char* itoa(char* str, int num) { //transform num into hex string
+PUBLIC char* itoa(char* str, int num) { //transform num into hex string ending with '/0'
 	char* p = str;
 	char ch;
 	int flag = 0;

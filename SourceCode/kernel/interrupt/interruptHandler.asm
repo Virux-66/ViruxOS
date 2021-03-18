@@ -193,8 +193,12 @@ IRQ15Handler:
 
 sys_call:
 	call save
+	push dword [PCBready]
 	sti
+	push ecx
+	push ebx
 	call [sysCallTable+eax*0x04]
+	add esp,12
 	mov [esi+MACRO_P_EAXREG],eax
 	cli
 	ret

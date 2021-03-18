@@ -14,7 +14,7 @@ PUBLIC TASK userProcessTable[userProcessNumber] = { {TestA,0x8000,"TestA"},
 											
 PUBLIC irqService irqServiceTable[16];
 
-PUBLIC systemCall sysCallTable[16] = { getTicksService };// = {getTicksService};
+PUBLIC systemCall sysCallTable[sysCallNumber] = { getTicksService , writeService};// = {getTicksService};
 
 PUBLIC u8 processStack[processStackSize * (userProcessNumber+taskNumber)];
 
