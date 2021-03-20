@@ -1,6 +1,8 @@
 #include "type.h"
 #include "prototype.h"
 
+PRIVATE int vaprintf(char* buf, const char* fmt, char* arg);
+
 PUBLIC int printf(const char* fmt, ...) {
 	int i;
 	char buf[256];
@@ -10,12 +12,12 @@ PUBLIC int printf(const char* fmt, ...) {
 	return i;
 }
 
-PRIVATE vaprintf(char* buf, const char* fmt, char* arg) {
-
+PRIVATE int vaprintf(char* buf, const char* fmt, char* arg) {
+	char* p;
 	char tmp[256];
 	char* pArg = arg;
 	int length = 0;
-	for (char* p = buf; *fmt; fmt++) {
+	for (p = buf; *fmt; fmt++) {
 		if (*fmt != '%') {
 			*p++ = *fmt;
 			continue;
@@ -25,9 +27,11 @@ PRIVATE vaprintf(char* buf, const char* fmt, char* arg) {
 		{
 		case 'x':
 			itoa(tmp, *((int*)pArg));
-			for (int k = 0; k < 256; k++){
-				if (tmp[k] == '\0')
+			for (int k = 0; k < 256; k++) {
+				if (tmp[k] == 0) {
 					length = k;
+					break;
+				}
 			}
 			memcpy(p, tmp, length);
 			pArg += 4;
@@ -35,7 +39,6 @@ PRIVATE vaprintf(char* buf, const char* fmt, char* arg) {
 			break;
 		case 's':
 			break;
-
 		default:
 			break;
 		}

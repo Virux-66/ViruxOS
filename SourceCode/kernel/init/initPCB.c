@@ -24,6 +24,7 @@ PUBLIC void initializePCB() {
 			eflags = 0x1202;
 		}
 		else {
+			pPCB->ttyIndex = 0;
 			pTask = userProcessTable + i-taskNumber;
 			descPrivilege = PRIVILEGE_RING3;
 			rpl = PRIVILEGE_RING3;
@@ -58,4 +59,7 @@ PUBLIC void initializePCB() {
 		pTask++;
 		selectorLDT += 8;
 	}
+	PCBTable[1].ttyIndex = 0;
+	PCBTable[2].ttyIndex = 1;
+	PCBTable[3].ttyIndex = 2;
 }

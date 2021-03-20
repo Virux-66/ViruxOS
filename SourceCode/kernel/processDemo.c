@@ -4,28 +4,24 @@
 
 PUBLIC void TestA() {
 	int i = 0;
-	newDescIndex = 16;
-	//dispStr("A");
 	while (1) {
-		//dispStr("A");
-		delayInMilli(100);
+		printf("<Ticks:%x>",getTicks());
+		delayInMilli(200);
 	}
 }
 
 PUBLIC void TestB() {
 	int i = 0x1000;
-	dispStr("B");
 	while (1) {
-		//dispStr("B");
-		delayInMilli(100);
+		printf("B");
+		delayInMilli(200);
 	}
 }
 
 PUBLIC void TestC() {
 	int i = 0x2000;
-	dispStr("C");
 	while (1) {
-		//dispStr("B");
-		delayInMilli(100);
+		printf("C");
+		delayInMilli(200);
 	}
 }

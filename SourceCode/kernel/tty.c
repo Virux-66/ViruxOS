@@ -63,9 +63,9 @@ PUBLIC void keyProcess(TTY* pTty,u32 key) {
 		case F10:
 		case F11:
 		case F12:
-			if ((key & FLAG_ALT_L) || (key & FLAG_ALT_R)) {
+			//if ((key & FLAG_ALT_L) || (key & FLAG_ALT_R)) {
 				switchOverConsole(rawCode - F1);
-			}
+			//}
 			break;
 
 		default:

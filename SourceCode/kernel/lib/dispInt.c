@@ -17,8 +17,8 @@ PUBLIC char* itoa(char* str, int num) { //transform num into hex string ending w
 		//return p;
 	}
 	else {
-		int i = 28;
-		for (; i >= 0; i -= 4) {
+		
+		for (int i = 28; i >= 0; i -= 4) {
 			bit = num >> i;
 			bit = bit & 0x0f;
 			if (flag || bit) {
