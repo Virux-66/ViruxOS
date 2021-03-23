@@ -145,9 +145,13 @@ PUBLIC void setled();//initKeyboard.c
 
 //syscall
 PUBLIC int getTicks();
-PUBLIC int getTicksService();
+PUBLIC int getTicksService(int unused1,int unused2,int unused3,PCB* pPCB);
 PUBLIC int write(char* p,int length);
-PUBLIC int writeService(char* buf,int length,PCB* pPCB);
+PUBLIC int writeService(int unused1,char* buf,int length,PCB* pPCB);
+PUBLIC void printx(char*);
+PUBLIC void printxService(int unused1, int unused2, char* s, PCB* pPCB);
+
+
 
 PUBLIC void delayInMilli();//lib/delay.c
 
@@ -169,4 +173,6 @@ PUBLIC char* itoa(char* str, int num);//dispInt.c
 PUBLIC int printf(const char* fmt, ...);
 
 PUBLIC void putKeyIntoBuf(TTY* pTty, u32 key);
+
+
 #endif // !_PROTOTYPE_H

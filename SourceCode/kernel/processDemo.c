@@ -3,9 +3,11 @@
 #include "global.h"
 
 PUBLIC void TestA() {
-	int i = 0;
+
+	int i = 1;
 	while (1) {
-		printf("<Ticks:%x>",getTicks());
+		printx("ABC");
+		printx("qweaxzcggb00");
 		delayInMilli(200);
 	}
 }
@@ -13,7 +15,7 @@ PUBLIC void TestA() {
 PUBLIC void TestB() {
 	int i = 0x1000;
 	while (1) {
-		printf("B");
+		//printf("B");
 		delayInMilli(200);
 	}
 }
@@ -21,7 +23,7 @@ PUBLIC void TestB() {
 PUBLIC void TestC() {
 	int i = 0x2000;
 	while (1) {
-		printf("C");
+		//printf("C");
 		delayInMilli(200);
 	}
 }

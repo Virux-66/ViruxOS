@@ -8,7 +8,7 @@ global write
 write:
 ;int write(char* ,int);
 	mov eax,_NR_write
-	mov ebx,[esp+4]	;char*
-	mov ecx,[esp+8]	;int
+	mov ecx,[esp+4]	;char*
+	mov edx,[esp+8]	;int
 	int 0x90
 	ret

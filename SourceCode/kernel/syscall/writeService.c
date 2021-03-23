@@ -3,7 +3,7 @@
 #include "prototype.h"
 #include "global.h"
 
-PUBLIC int writeService(/*const*/ char* buf,int length,PCB* pPCB) {
+PUBLIC int writeService(int unused1, char* buf,int length,PCB* pPCB) {
 	char* p = buf;
 	int len = length;
 	while (len) {

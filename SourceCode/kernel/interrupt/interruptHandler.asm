@@ -191,14 +191,16 @@ IRQ14Handler:
 IRQ15Handler:
 	IRQMACRO 15
 
+;edx second to last;ecx third to last;ebx the first 
 sys_call:
 	call save
 	push dword [PCBready]
 	sti
-	push ecx
+	push edx	
+	push ecx	
 	push ebx
 	call [sysCallTable+eax*0x04]
-	add esp,12
+	add esp,16
 	mov [esi+MACRO_P_EAXREG],eax
 	cli
 	ret
@@ -209,9 +211,11 @@ save:
 	push es
 	push fs
 	push gs
+	mov esi,edx
 	mov dx,ss
 	mov ds,dx
 	mov es,dx
+	mov edx,esi
 	mov esi,esp
 	inc dword [intReEnterFlag]
 	cmp dword [intReEnterFlag],0

@@ -15,7 +15,7 @@
 
 #define consoleNumber 3
 
-#define sysCallNumber 2
+#define sysCallNumber 3
 
 #define V_MEM_BASE			0xB8000
 #define V_MEM_SIZE			0x8000
