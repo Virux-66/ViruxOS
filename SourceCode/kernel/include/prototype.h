@@ -157,6 +157,10 @@ PUBLIC void delayInMilli();//lib/delay.c
 
 PUBLIC void pcbSchedule();//pcbSchedule.c
 
+PUBLIC u32 va2la(int pid, u32 offset);
+
+PUBLIC u32 getSegBase_LDT(PCB* pPCB, int index);
+
 //console.c
 PUBLIC int isCurrentConsole(CONSOLE* pConsole); 
 
@@ -173,6 +177,10 @@ PUBLIC char* itoa(char* str, int num);//dispInt.c
 PUBLIC int printf(const char* fmt, ...);
 
 PUBLIC void putKeyIntoBuf(TTY* pTty, u32 key);
+
+PUBLIC int convert(char* buf, const char* fmt, char* arg);
+
+PUBLIC void panic(const char* fmt);
 
 
 #endif // !_PROTOTYPE_H

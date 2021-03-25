@@ -3,13 +3,17 @@
 #include "global.h"
 #include "prototype.h"
 #include "important.h"
+#include "const.h"
+#include "color.h"
 
-PRIVATE u32 va2la(int, u32);
-PRIVATE u32 getSegBase_LDT(PCB* pPCB, int index);
+
 
 PUBLIC void printxService(int unused1, int unused2, char* s, PCB* pPCB) {
 	char ch;
 	const char* p;
+
+	//char errInfo[] = "? k_reenter is incorrect for unknown reason";
+
 
 	if (intReEnterFlag == 0) {
 		p = (char*)va2la(pPCB->processID, (u32)s);
@@ -19,19 +23,40 @@ PUBLIC void printxService(int unused1, int unused2, char* s, PCB* pPCB) {
 	}
 
 
+
+	if ((*p == MAG_CH_PANIC) || (*p == MAG_CH_ASSERT && PCBready < &PCBTable[taskNumber])) {
+		disableInt();
+		char* v = (char*)V_MEM_BASE;
+		const char* q = p + 1;
+		while (v < (char*)(V_MEM_BASE + V_MEM_SIZE)) {
+			*v++ = *q++;
+			*v++ = WORD_RED;
+			if (!*q) {
+				while (((int)v - V_MEM_BASE) % (SCREEN_WIDTH * 16)) {
+					v++;
+					*v++ = WORD_BROWN;
+				}
+				q = p + 1;
+			}
+			
+		}
+		__asm__ __volatile__("hlt");
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 	while ((ch = *p++) != 0) {
 		putChar(ttyTable[pPCB->ttyIndex].pConsole, ch);
 	}
 }
 
-PRIVATE u32 va2la(int pid, u32 offset) {
-	PCB* pPCB = &PCBTable[pid];
-	u32 segBase = getSegBase_LDT(pPCB, 1);
-	u32 la = segBase + offset;
-	return la;
-}
 
-PRIVATE u32 getSegBase_LDT(PCB* pPCB, int index) {
-	Descriptor* pDesc = &pPCB->ldt[index];
-	return (pDesc->baseHigh2 << 24 | pDesc->basehigh1 << 16 | pDesc->baseLow);
-}

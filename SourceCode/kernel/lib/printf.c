@@ -1,18 +1,18 @@
 #include "type.h"
 #include "prototype.h"
 
-PRIVATE int vaprintf(char* buf, const char* fmt, char* arg);
+//PRIVATE int convert(char* buf, const char* fmt, char* arg);
 
 PUBLIC int printf(const char* fmt, ...) {
 	int i;
 	char buf[256];
 	char* arg = (char*)((char*)&fmt + 4);
-	i = vaprintf(buf, fmt, arg);
-	write(buf, i);
+	i = convert(buf, fmt, arg);
+	printx(buf);
 	return i;
 }
 
-PRIVATE int vaprintf(char* buf, const char* fmt, char* arg) {
+PUBLIC int convert(char* buf, const char* fmt, char* arg) {
 	char* p;
 	char tmp[256];
 	char* pArg = arg;
@@ -25,6 +25,10 @@ PRIVATE int vaprintf(char* buf, const char* fmt, char* arg) {
 		fmt++;
 		switch (*fmt)
 		{
+		case 'c':
+			*p++ = *((char*)pArg);
+			pArg += 4;
+			break;
 		case 'x':
 			itoa(tmp, *((int*)pArg));
 			for (int k = 0; k < 256; k++) {
@@ -38,6 +42,9 @@ PRIVATE int vaprintf(char* buf, const char* fmt, char* arg) {
 			p += length;
 			break;
 		case 's':
+			for (char* ps = *((char**)arg); *ps; ps++) 
+				*p++ = *ps;
+			pArg += 4;
 			break;
 		default:
 			break;

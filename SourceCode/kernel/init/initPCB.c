@@ -59,7 +59,16 @@ PUBLIC void initializePCB() {
 		pTask++;
 		selectorLDT += 8;
 	}
+	memcpy(PCBTable[taskNumber].processName, "TestA", sizeof("TestA") - 1);
+	memcpy(PCBTable[taskNumber + 1].processName, "TestB", sizeof("TestB") - 1);
+	memcpy(PCBTable[taskNumber + 2].processName, "TestC", sizeof("TestC") - 1);
+
+
+
+
+	/*
 	PCBTable[1].ttyIndex = 0;
 	PCBTable[2].ttyIndex = 1;
 	PCBTable[3].ttyIndex = 2;
+	*/
 }

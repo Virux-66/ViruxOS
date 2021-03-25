@@ -5,6 +5,7 @@
 #include "keymap.h"
 #include "global.h"
 #include "port.h"
+#include "const.h"
 
 #define TTY_FIRST ttyTable
 #define TTY_END	  ttyTable+consoleNumber
@@ -19,6 +20,7 @@ PUBLIC void tty() {
 		initTty(pTty);
 	}
 	switchOverConsole(0);
+	//assert(0);
 	while (1) {
 		for (pTty = TTY_FIRST; pTty < TTY_END; pTty++) {
 			ttyRead(pTty);
