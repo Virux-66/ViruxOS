@@ -115,7 +115,9 @@ PUBLIC int sendMessage(PCB* current, int dest, MESSAGE* m) {
 	if ((receiver->pFlags & RECEVING) && (receiver->pReceivefrom == sender->processID || receiver->pReceivefrom == ANY)) {
 		assert(receiver->pMessage);//receiver's message must not be empty and must point an address so that it can be put data.
 		assert(m);				   //m is sending message sent by sender, also ,it cant be empty.
+
 		memcpy(va2la(dest, (u32)receiver->pMessage), va2la(sender->processID, (u32)m), sizeof(MESSAGE));//this statement costs a majority of time of IPC
+
 		receiver->pMessage = 0;//why pMessage becomes null?
 		receiver->pFlags &= ~RECEVING;//Normally, receiver->pFlags will be 0-runnable
 		receiver->pReceivefrom = NO_TASK;
@@ -258,7 +260,7 @@ PUBLIC int receiveMessage(PCB* current, int src, MESSAGE* m) {
 		assert(p_who_wanna_recv->pFlags == RECEVING);
 		assert(p_who_wanna_recv->pMessage != 0);
 		assert(p_who_wanna_recv->pReceivefrom != NO_TASK);
-		assert(p_who_wanna_recv->pSendto != NO_TASK);
+		assert(p_who_wanna_recv->pSendto == NO_TASK);
 		assert(p_who_wanna_recv->hasIntMeg == 0);
 	
 	}

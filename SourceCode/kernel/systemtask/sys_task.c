@@ -7,10 +7,10 @@ PUBLIC void sys_task() {
 
 
 	while (1) {
-		/*send_recv(RECEIVE, ANY, &meg);
-		int src = meg.source;
-		printf("%x", &meg.source);
+		send_recv(RECEIVE, ANY, &meg);
+		int value = meg.u.m1.m1i1;
+		printf("%d", value);
 
-		delayInMilli(200);*/
+		delayInMilli(200);
 	}
 }

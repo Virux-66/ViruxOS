@@ -6,17 +6,14 @@
 
 PUBLIC void TestA() {
 
-	assert(0);
-
-
-
 	MESSAGE* pMessage;
 	MESSAGE msg;
 	pMessage = &msg;
-	pMessage->source = 16;
+	pMessage->type = 5;
+	(pMessage->u).m1.m1i1 = 66;
 	int result=send_recv(SEND, 1, pMessage);
-	printf("%x", &result);
-	
+	printf("%d\n", result);
+
 	while (1) {
 		//printf(PCBTable[1].processName);
 		delayInMilli(200);
