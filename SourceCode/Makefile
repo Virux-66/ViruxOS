@@ -14,7 +14,7 @@ BOOTER		=	booter/bootSector.bin booter/Loader.bin
 KERNEL		=	kernel/Kernel.bin
 OBJS		=	kernel/Kernel.o kernel/start.o kernel/global.o kernel/processDemo.o kernel/process.o \
 kernel/console.o kernel/mistake.o \
-kernel/systemtask/sys_tty.o \
+kernel/systemtask/sys_tty.o kernel/systemtask/sys_task.o\
 kernel/lib/delay.o kernel/lib/dispInt.o kernel/lib/display.o kernel/lib/operatePort.o kernel/lib/string.o \
 kernel/lib/openIrq.o kernel/lib/interrupt.o \
 kernel/init/init8259A.o kernel/init/initDescriptor.o kernel/init/initIDT.o kernel/init/initLDTDescriptor.o \
@@ -69,7 +69,9 @@ kernel/mistake.o                    :   kernel/mistake.c
 #SourceCode/kernel/systemtask									
 kernel/systemtask/sys_tty.o         :	kernel/systemtask/sys_tty.c
 										${CC} ${CFLAGS} -o $@ $<
-	
+kernel/systemtask/sys_task.o        :   kernel/systemtask/sys_task.c
+										${CC} ${CFLAGS} -o $@ $<
+										
 
 
 #SourceCode/kernel/lib

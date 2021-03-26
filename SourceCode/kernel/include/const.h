@@ -11,7 +11,7 @@
 
 #define processStackSize	0x8000
 
-#define taskNumber	1
+#define taskNumber	2
 
 #define consoleNumber 3
 

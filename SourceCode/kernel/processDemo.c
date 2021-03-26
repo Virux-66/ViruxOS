@@ -1,10 +1,22 @@
 #include "type.h"
 #include "prototype.h"
 #include "global.h"
+#include "const.h"
+#include "message.h"
 
 PUBLIC void TestA() {
 
-	int i = 1;
+	assert(0);
+
+
+
+	MESSAGE* pMessage;
+	MESSAGE msg;
+	pMessage = &msg;
+	pMessage->source = 16;
+	int result=send_recv(SEND, 1, pMessage);
+	printf("%x", &result);
+	
 	while (1) {
 		//printf(PCBTable[1].processName);
 		delayInMilli(200);

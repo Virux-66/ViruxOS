@@ -10,6 +10,10 @@
 PUBLIC void* memcpy(void* dest, void* source, int size); 
 
 PUBLIC void  memset(void* dest, char ch, int size);
+
+PUBLIC char* strcpy(char* pdest, char* psrc);
+
+PUBLIC int strlen(char* pstr);
 //display.asm
 PUBLIC void dispStr(char* str);
 
@@ -54,7 +58,9 @@ PUBLIC void TestB();//processDemo.c
 
 PUBLIC void TestC();
 
-PUBLIC void sys_tty();//tty.c
+PUBLIC void sys_tty();
+
+PUBLIC void sys_task();
 
 PUBLIC void keyProcess(TTY* pTty,u32 key);
 
@@ -152,6 +158,9 @@ PUBLIC void printx(char*);
 PUBLIC void printxService(int unused1, int unused2, char* s, PCB* pPCB);
 PUBLIC int sendrec(int function, int src_dest, MESSAGE* pMessage);
 PUBLIC int sendrecService(int function, int src_dest, MESSAGE* pMessage, PCB* pPCB);
+
+PUBLIC int send_recv(int function, int src_dest, MESSAGE* pMessage);
+
 
 
 PUBLIC void delayInMilli();//lib/delay.c

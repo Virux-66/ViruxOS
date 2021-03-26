@@ -6,7 +6,7 @@
 #include "prototype.h"
 #include "global.h"
 
-PUBLIC TASK taskTable[taskNumber]= {{sys_tty,0x8000,"sys_tty"} };
+PUBLIC TASK taskTable[taskNumber] = { {sys_tty,0x8000,"sys_tty"},{sys_task,0x8000,"sys_task"} };
 							
 PUBLIC TASK userProcessTable[userProcessNumber] = { {TestA,0x8000,"TestA"},
 												{TestB,0x8000,"TestB"},

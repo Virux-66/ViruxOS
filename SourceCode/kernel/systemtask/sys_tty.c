@@ -20,13 +20,15 @@ PUBLIC void sys_tty() {
 		initTty(pTty);
 	}
 	switchOverConsole(0);
-	//assert(0);
 	while (1) {
 		for (pTty = TTY_FIRST; pTty < TTY_END; pTty++) {
 			ttyRead(pTty);
 			ttyWrite(pTty);
 		}
 	}
+
+	
+
 }
 
 PUBLIC void keyProcess(TTY* pTty,u32 key) {
