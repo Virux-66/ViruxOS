@@ -24,12 +24,14 @@ PUBLIC void initializePCB() {
 			eflags = 0x1202;
 		}
 		else {
-			pPCB->ttyIndex = 0;
+
 			pTask = userProcessTable + i-taskNumber;
 			descPrivilege = PRIVILEGE_RING3;
 			rpl = PRIVILEGE_RING3;
 			eflags = 0x202;
 		}
+		pPCB->ttyIndex = 0;
+
 		memcpy(pPCB->processName, pTask->name, sizeof(pTask->name));
 		pPCB->processID = i;
 		pPCB->ldtSelector = selectorLDT;
@@ -55,6 +57,18 @@ PUBLIC void initializePCB() {
 
 		pPCB->stackframe.eflags = eflags;
 		
+		pPCB->pFlags = 0;
+		pPCB->pMessage = 0;
+		pPCB->pReceivefrom = NO_TASK;
+		pPCB->pSendto = NO_TASK;
+		pPCB->hasIntMeg = 0;
+		pPCB->sendingQueue = 0;
+		pPCB->nextSending = 0;
+
+
+
+
+
 		pPCB++;
 		pTask++;
 		selectorLDT += 8;

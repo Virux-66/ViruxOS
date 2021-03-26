@@ -13,7 +13,8 @@ LDFLAGS		=	-m elf_i386 -s -Ttext ${ENTRYPOINT}
 BOOTER		=	booter/bootSector.bin booter/Loader.bin
 KERNEL		=	kernel/Kernel.bin
 OBJS		=	kernel/Kernel.o kernel/start.o kernel/global.o kernel/processDemo.o kernel/process.o \
-kernel/tty.o kernel/console.o kernel/mistake.o \
+kernel/console.o kernel/mistake.o \
+kernel/systemtask/sys_tty.o \
 kernel/lib/delay.o kernel/lib/dispInt.o kernel/lib/display.o kernel/lib/operatePort.o kernel/lib/string.o \
 kernel/lib/openIrq.o kernel/lib/interrupt.o \
 kernel/init/init8259A.o kernel/init/initDescriptor.o kernel/init/initIDT.o kernel/init/initLDTDescriptor.o \
@@ -22,7 +23,7 @@ kernel/init/initKeyboard.o \
 kernel/interrupt/exceptionHandler.o kernel/interrupt/clockService.o kernel/interrupt/interruptHandler.o \
 kernel/interrupt/keyboardService.o kernel/interrupt/keyboardResolution.o \
 kernel/syscall/getTicks.o kernel/syscall/getTicksService.o kernel/syscall/write.o kernel/syscall/writeService.o kernel/lib/printf.o \
-kernel/syscall/printx.o kernel/syscall/printxService.o
+kernel/syscall/printx.o kernel/syscall/printxService.o kernel/syscall/sendrec.o kernel/syscall/sendrecService.o
 
 
 .PHONY		:	all everything cleanAllBin cleanAllO buildImg
@@ -64,8 +65,11 @@ kernel/console.o                    :   kernel/console.c kernel/include/console.
 										${CC} ${CFLAGS} -o $@ $<
 kernel/mistake.o                    :   kernel/mistake.c 
 										${CC} ${CFLAGS} -o $@ $<
-										
 
+#SourceCode/kernel/systemtask									
+kernel/systemtask/sys_tty.o         :	kernel/systemtask/sys_tty.c
+										${CC} ${CFLAGS} -o $@ $<
+	
 
 
 #SourceCode/kernel/lib
@@ -136,4 +140,7 @@ kernel/syscall/printx.o                 :   kernel/syscall/printx.asm
 											${ASM} ${ASMKFLAGS} -o $@ $<
 kernel/syscall/printxService.o          :   kernel/syscall/printxService.c
 											${CC} ${CFLAGS} -o $@ $<
-															
+kernel/syscall/sendrec.o                :   kernel/syscall/sendrec.asm
+											${ASM} ${ASMKFLAGS} -o $@ $<
+kernel/syscall/sendrecService.o         :   kernel/syscall/sendrecService.c 									
+											${CC} ${CFLAGS} -o $@ $<

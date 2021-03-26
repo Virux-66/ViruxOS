@@ -6,7 +6,7 @@
 #include "prototype.h"
 #include "global.h"
 
-PUBLIC TASK taskTable[taskNumber]= {{tty,0x8000,"tty"} };
+PUBLIC TASK taskTable[taskNumber]= {{sys_tty,0x8000,"sys_tty"} };
 							
 PUBLIC TASK userProcessTable[userProcessNumber] = { {TestA,0x8000,"TestA"},
 												{TestB,0x8000,"TestB"},
@@ -14,7 +14,7 @@ PUBLIC TASK userProcessTable[userProcessNumber] = { {TestA,0x8000,"TestA"},
 											
 PUBLIC irqService irqServiceTable[16];
 
-PUBLIC systemCall sysCallTable[sysCallNumber] = { getTicksService , writeService,printxService };
+PUBLIC systemCall sysCallTable[sysCallNumber] = { getTicksService , writeService , printxService , sendrecService};
 
 PUBLIC u8 processStack[processStackSize * (userProcessNumber+taskNumber)];
 

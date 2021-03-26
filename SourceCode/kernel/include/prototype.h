@@ -54,7 +54,7 @@ PUBLIC void TestB();//processDemo.c
 
 PUBLIC void TestC();
 
-PUBLIC void tty();//tty.c
+PUBLIC void sys_tty();//tty.c
 
 PUBLIC void keyProcess(TTY* pTty,u32 key);
 
@@ -150,7 +150,8 @@ PUBLIC int write(char* p,int length);
 PUBLIC int writeService(int unused1,char* buf,int length,PCB* pPCB);
 PUBLIC void printx(char*);
 PUBLIC void printxService(int unused1, int unused2, char* s, PCB* pPCB);
-
+PUBLIC int sendrec(int function, int src_dest, MESSAGE* pMessage);
+PUBLIC int sendrecService(int function, int src_dest, MESSAGE* pMessage, PCB* pPCB);
 
 
 PUBLIC void delayInMilli();//lib/delay.c
@@ -180,7 +181,10 @@ PUBLIC void putKeyIntoBuf(TTY* pTty, u32 key);
 
 PUBLIC int convert(char* buf, const char* fmt, char* arg);
 
-PUBLIC void panic(const char* fmt);
+PUBLIC void panic(const char* fmt,...);
+
+PUBLIC int sendMessage(PCB* current, int dest, MESSAGE* m);
+PUBLIC int receiveMessage(PCB* current, int src, MESSAGE* m);
 
 
 #endif // !_PROTOTYPE_H

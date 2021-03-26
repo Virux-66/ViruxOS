@@ -196,9 +196,9 @@ sys_call:
 	call save
 	push dword [PCBready]
 	sti
-	push edx	
-	push ecx	
-	push ebx
+	push edx	;MESSAGE* pMessage
+	push ecx	;int src_dest
+	push ebx	;int function
 	call [sysCallTable+eax*0x04]
 	add esp,16
 	mov [esi+MACRO_P_EAXREG],eax

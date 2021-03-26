@@ -15,7 +15,7 @@ PUBLIC void assertionFailure(char* exp,char* file,char*base_file,int line) {
 	spin("assertFailure()");
 }
 
-PUBLIC void panic(const char* fmt) {
+PUBLIC void panic(const char* fmt,...) {
 	int i;
 	char buf[256];
 

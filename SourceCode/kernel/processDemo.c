@@ -6,7 +6,7 @@ PUBLIC void TestA() {
 
 	int i = 1;
 	while (1) {
-		printf(PCBTable[1].processName);
+		//printf(PCBTable[1].processName);
 		delayInMilli(200);
 	}
 }

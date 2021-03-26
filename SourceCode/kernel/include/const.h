@@ -15,7 +15,7 @@
 
 #define consoleNumber 3
 
-#define sysCallNumber 3
+#define sysCallNumber 4
 
 #define V_MEM_BASE			0xB8000
 #define V_MEM_SIZE			0x8000
@@ -25,6 +25,11 @@
 
 #define SENDING		0x02	//pFlags
 #define RECEVING	0x04	//pFlags
+
+//ipc type
+#define SEND		1
+#define RECEIVE		2
+#define	BOTH		3
 
 #define ANY		(userProcessNumber+taskNumber+10)
 #define NO_TASK (userProcessNumber+taskNumber+20)
