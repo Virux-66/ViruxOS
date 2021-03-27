@@ -1,5 +1,6 @@
 #ifndef _MESSAGE_H
 #define _MESSAGE_H
+#include "package.h"
 
 struct mess1 {
 	int m1i1;
@@ -27,6 +28,8 @@ struct mess3 {
 typedef struct {
 	int source;
 	int type;
+	int reply;		//when reply = 1 , it means service requested has done;
+	PACKAGE* pPackage;
 	union {
 		struct mess1 m1;
 		struct mess2 m2;

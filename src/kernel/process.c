@@ -265,3 +265,16 @@ PUBLIC int receiveMessage(PCB* current, int src, MESSAGE* m) {
 	}
 	return 0;
 }
+
+PUBLIC int exchange(PACKAGE* pPackage) {
+	int result=1;
+	MESSAGE msg;
+	resetMessage(&msg);
+	msg.type = SEG_EXC;
+	msg.pPackage = pPackage;
+	msg.reply = 0;
+	do {
+		result = send_recv(BOTH, 1, &msg);
+	} while (!msg.reply);
+	return result;
+}

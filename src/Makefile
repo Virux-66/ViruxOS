@@ -23,7 +23,8 @@ kernel/init/initKeyboard.o \
 kernel/interrupt/exceptionHandler.o kernel/interrupt/clockService.o kernel/interrupt/interruptHandler.o \
 kernel/interrupt/keyboardService.o kernel/interrupt/keyboardResolution.o \
 kernel/syscall/getTicks.o kernel/syscall/getTicksService.o kernel/syscall/write.o kernel/syscall/writeService.o kernel/lib/printf.o \
-kernel/syscall/printx.o kernel/syscall/printxService.o kernel/syscall/sendrec.o kernel/syscall/sendrecService.o
+kernel/syscall/printx.o kernel/syscall/printxService.o kernel/syscall/sendrec.o kernel/syscall/sendrecService.o \
+
 
 
 .PHONY		:	all everything cleanAllBin cleanAllO buildImg
@@ -146,3 +147,5 @@ kernel/syscall/sendrec.o                :   kernel/syscall/sendrec.asm
 											${ASM} ${ASMKFLAGS} -o $@ $<
 kernel/syscall/sendrecService.o         :   kernel/syscall/sendrecService.c 									
 											${CC} ${CFLAGS} -o $@ $<
+	
+

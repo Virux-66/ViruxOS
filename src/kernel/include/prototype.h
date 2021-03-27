@@ -6,6 +6,7 @@
 #include "important.h"
 #include "console.h"
 #include "process.h"
+#include "package.h"
 //string.asm
 PUBLIC void* memcpy(void* dest, void* source, int size); 
 
@@ -159,6 +160,9 @@ PUBLIC void printxService(int unused1, int unused2, char* s, PCB* pPCB);
 PUBLIC int sendrec(int function, int src_dest, MESSAGE* pMessage);
 PUBLIC int sendrecService(int function, int src_dest, MESSAGE* pMessage, PCB* pPCB);
 
+
+
+
 PUBLIC int send_recv(int function, int src_dest, MESSAGE* pMessage);
 
 
@@ -196,5 +200,8 @@ PUBLIC int sendMessage(PCB* current, int dest, MESSAGE* m);
 PUBLIC int receiveMessage(PCB* current, int src, MESSAGE* m);
 
 PUBLIC void resetMessage(MESSAGE* pMessage);
+
+
+PUBLIC int exchange(PACKAGE* pPackage);
 
 #endif // !_PROTOTYPE_H

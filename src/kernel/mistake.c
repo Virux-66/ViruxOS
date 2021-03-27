@@ -10,13 +10,10 @@ PUBLIC void spin(char* funcName) {
 
 
 PUBLIC void assertionFailure(char* exp,char* file,char*base_file,int line) {
-	/*printf("file:%s\n", file);
-	printf("base_file:%s\n", base_file);
-	printf("line:%x\n", line);*/
 
 
-	printf("%c  assert() failed: file: %s, base_file: %s, line: %x",
-		MAG_CH_ASSERT,  file, base_file, line);
+	printf("%c  assert(%s) failed: file: %s, base_file: %s, line: %x",
+		MAG_CH_ASSERT,exp ,file, base_file, line);
 	spin("assertFailure()");
 }
 

@@ -45,6 +45,17 @@ PUBLIC void initializePCB() {
 		pPCB->ldt[2].limitHigh_attr2 &= 0x0F;
 		pPCB->ldt[2].limitLow = 128;
 
+		if (i == 1) {
+			(pPCB->ldt[2]).baseLow = 1;
+		}
+		if (i == 2) {
+			(pPCB->ldt[2]).baseLow = 2;
+		}
+
+
+
+
+
 		pPCB->stackframe.cs = SA_LDT | rpl;
 
 		pPCB->stackframe.ds = 0x08 | SA_LDT | rpl;

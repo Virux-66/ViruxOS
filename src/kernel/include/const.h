@@ -39,6 +39,7 @@
 //message type
 #define HARD_INT	1
 #define GET_TICKS	2
+#define SEG_EXC		3
 
 #define ASSERT
 #ifdef ASSERT
