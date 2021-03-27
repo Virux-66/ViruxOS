@@ -60,7 +60,6 @@ PUBLIC int send_recv(int function, int src_dest, MESSAGE* pMessage) {
 }
 
 
-
 PRIVATE void block(PCB* pPCB) {
 	assert(pPCB->pFlags);
 	pcbSchedule();

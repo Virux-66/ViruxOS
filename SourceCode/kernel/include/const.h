@@ -37,7 +37,8 @@
 #define INTERRUPT -10
 
 //message type
-#define HARD_INT 1
+#define HARD_INT	1
+#define GET_TICKS	2
 
 #define ASSERT
 #ifdef ASSERT

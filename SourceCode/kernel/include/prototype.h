@@ -195,5 +195,6 @@ PUBLIC void panic(const char* fmt,...);
 PUBLIC int sendMessage(PCB* current, int dest, MESSAGE* m);
 PUBLIC int receiveMessage(PCB* current, int src, MESSAGE* m);
 
+PUBLIC void resetMessage(MESSAGE* pMessage);
 
 #endif // !_PROTOTYPE_H
