@@ -4,7 +4,7 @@
 #include "global.h"
 
 
-#define HZ			100     //100hz 10ms per clock interrupt
+#define HZ			100     //100000hz 10us per clock interrupt
 #define TIMER_FREQ	1193182L
 PUBLIC void initClock() {
 	writePort(_8253_MCR_PORT,0x34);

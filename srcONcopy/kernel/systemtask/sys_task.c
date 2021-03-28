@@ -19,6 +19,9 @@ PUBLIC void sys_task() {
 			msg.dest = dest;
 			msg.type = COPY;
 			send_recv(SEND, dest, &msg);
+
+
+
 			do {
 				send_recv(RECEIVE, dest, &msg);
 			} while (!(msg.type==ECHO));

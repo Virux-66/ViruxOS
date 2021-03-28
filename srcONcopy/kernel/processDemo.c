@@ -11,19 +11,20 @@ PRIVATE void dataProcess(MESSAGE* pMessage);
 
 PUBLIC void TestA() {
 	int ticks = 0;
-
-	int index = 0;
+	int number = 1000;
 	printf("In TestA now\n");
+	printf("Number=%d\n", number);
 	MESSAGE msg;
 	ticks = getTicks();
 	printf("tick1=%d\n", ticks);
-	for (; index < 100; index++) {
+	for (int index; index < number; index++) {
 		resetMessage(&msg);
 		msg.u.m1.m1i1 = 100;
 		msg.source = 2;
 		msg.dest = 3;
 		msg.type = COPY;
 		send_recv(SEND, 1, &msg);
+
 		do {
 			send_recv(RECEIVE, 1, &msg);
 		} while (!msg.reply);
@@ -31,33 +32,28 @@ PUBLIC void TestA() {
 	ticks = getTicks();
 	printf("tick2=%d\n", ticks);
 	while (1) {
-
 		delayInMilli(1);
 	}
 }
 
 PUBLIC void TestB() {
-
 	printf("In TestB now\n");
 	MESSAGE msg;
 	MESSAGE response;
 	while (1) {
 		resetMessage(&msg);
 		resetMessage(&response);
+
 		do {
 			send_recv(RECEIVE, 1, &msg);
 		} while (!(msg.type==COPY));
-		//printf("message=%d\n", msg.u.m1.m1i1);s
 		response.source = 3;
 		response.dest = 1;
 		response.type = ECHO;
 		send_recv(SEND, 1, &response);
 		dataProcess(&msg);
 	}
-
-
 	while (1) {
-		
 		delayInMilli(1);
 	}
 }
