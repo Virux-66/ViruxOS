@@ -7,7 +7,7 @@
 #define MASTER_INT_NUM 0x20
 #define SLAVE_INT_NUM 0x28
 
-#define userProcessNumber 3
+#define userProcessNumber 2
 
 #define processStackSize	0x8000
 
@@ -41,6 +41,8 @@
 #define GET_TICKS	2
 #define SEG_EXC		3	
 #define NEGO		4
+#define COPY		5
+#define ECHO		6
 
 #define ASSERT
 #ifdef ASSERT

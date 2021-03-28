@@ -9,8 +9,8 @@
 PUBLIC TASK taskTable[taskNumber] = { {sys_tty,0x8000,"sys_tty"},{sys_task,0x8000,"sys_task"} };
 							
 PUBLIC TASK userProcessTable[userProcessNumber] = { {TestA,0x8000,"TestA"},
-												{TestB,0x8000,"TestB"},
-												{TestC,0x8000,"TestC"}   };
+												{TestB,0x8000,"TestB"}
+												   };
 											
 PUBLIC irqService irqServiceTable[16];
 

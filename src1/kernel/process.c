@@ -273,8 +273,10 @@ PUBLIC int exchange(PACKAGE* pPackage) {
 	msg.type = SEG_EXC;
 	msg.pPackage = pPackage;
 	msg.reply = 0;
-	result = send_recv(BOTH, 1, &msg);
-	while (!msg.reply) {};
+	result = send_recv(SEND, 1, &msg);
+	do{
+		send_recv(RECEIVE,1,&msg);
+	}while (!(msg.reply));
 	return result;
 }
 
@@ -286,8 +288,9 @@ PUBLIC int negotiate(PACKAGE* pPackage) {
 	msg.type = NEGO;
 	msg.pPackage = pPackage;
 	msg.reply = 0;
-	result=send_recv(BOTH, 1, &msg);
-	
-	while (!msg.reply) {};
+	result=send_recv(SEND, 1, &msg);
+	do{
+		send_recv(RECEIVE,1,&msg);
+	}while (!(msg.reply));
 	return result;
 }

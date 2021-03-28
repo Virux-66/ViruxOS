@@ -6,12 +6,27 @@
 
 PUBLIC void sys_task() {
 	MESSAGE msg;
-
+	resetMessage(&msg);
 
 	while (1) {
 		send_recv(RECEIVE, ANY, &msg);		//if no any other process sends message, sys_task block
 		int src = msg.source;
+		int dest = msg.dest;
+
 		switch (msg.type) {
+		case COPY: {
+			msg.source = 1;
+			msg.dest = dest;
+			msg.type = COPY;
+			send_recv(SEND, dest, &msg);
+			do {
+				send_recv(RECEIVE, dest, &msg);
+			} while (!(msg.type==ECHO));
+			msg.reply = 1;
+			send_recv(SEND, src, &msg);
+
+			break;
+		}
 		case GET_TICKS:
 			msg.u.m3.m3i1 = ticks;
 			send_recv(SEND, src, &msg);
