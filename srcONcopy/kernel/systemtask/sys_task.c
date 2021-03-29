@@ -19,15 +19,11 @@ PUBLIC void sys_task() {
 			msg.dest = dest;
 			msg.type = COPY;
 			send_recv(SEND, dest, &msg);
-
-
-
 			do {
 				send_recv(RECEIVE, dest, &msg);
 			} while (!(msg.type==ECHO));
 			msg.reply = 1;
 			send_recv(SEND, src, &msg);
-
 			break;
 		}
 		case GET_TICKS:
