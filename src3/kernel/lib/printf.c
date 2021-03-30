@@ -8,7 +8,6 @@ PUBLIC int printf(const char* fmt, ...) {
 	char buf[256];
 	char* arg = (char*)((char*)&fmt + 4);
 	i = convert(buf, fmt, arg);
-	dispStr(buf);
 	printx(buf);
 	return i;
 }

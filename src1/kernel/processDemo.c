@@ -11,12 +11,13 @@ PRIVATE void dataProcess(MESSAGE* pMessage);
 
 PUBLIC void TestA() {
 	int ticks = 0;
-	int number = 1000;
-	printf("In TestA now\n");
-	printf("Number=%d\n", number);
+	int number = 3000;
+	printf("\nIn TestA now\n");
+	printf("Test copy IPC algorithm!\n");
+	printf("IPC number=%d\n", number);
 	MESSAGE msg;
 	ticks = getTicks();
-	printf("tick1=%d\n", ticks);
+	printf("<ticks=%d>\n", ticks);
 	for (int index; index < number; index++) {
 		resetMessage(&msg);
 		msg.u.m1.m1i1 = 100;
@@ -30,7 +31,8 @@ PUBLIC void TestA() {
 		} while (!msg.reply);
 	}
 	ticks = getTicks();
-	printf("tick2=%d\n", ticks);
+	printf("<ticks=%d>\n", getTicks()-ticks);
+	printf("TestA has sent %d * 108B to TestB.It takes %d ticks!\n", number, getTicks() - ticks);
 	while (1) {
 		delayInMilli(1);
 	}

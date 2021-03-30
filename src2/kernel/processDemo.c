@@ -13,10 +13,12 @@ PUBLIC void TestA() {
 
 
 	PACKAGE pack;
-	int number = 422;
-	printf("In TestA now\n");
-	printf("<Ticks=%d>\n", getTicks());
-	printf("Number=%d\n", number);
+	int number = 1266;
+	printf("\nIn TestA now\n");
+	printf("Test SBEA IPC algorithm!\n");
+	printf("IPC number=%d\n", number);
+	int ticks = getTicks();
+	printf("<ticks=%d>\n", ticks);
 	for (int i = 0; i < number; i++) {
 		ack = 0;
 		pack.source = 2;
@@ -24,15 +26,15 @@ PUBLIC void TestA() {
 		pack.dataSize = 128;
 		exchange(&pack);
 	}
-	printf("<Ticks=%d>\n", getTicks());
-
+	printf("<ticks=%d>\n", getTicks()-ticks);
+	printf("TestA has sent 3000 * 108B to TestB. It takes %d ticks!\n", getTicks() - ticks);
 	while (1) {
 		delayInMilli(1);
 	}
 }
 
 PUBLIC void TestB() {
-	printf("In TestB!!!!!!!!!!!!!! now\n");
+	printf("In TestB now!\n");
 	while (!ack) {};
 
 
