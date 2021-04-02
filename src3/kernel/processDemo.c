@@ -13,7 +13,7 @@ PUBLIC void TestA() {
 	int number = 80;
 	printf("\nIn TestA now\n");
 	printf("Test N-SBEA IPC algorithm!\n");
-	printf("IPC number=%d\n");
+	printf("IPC number=%d\n",number);
 	PACKAGE pack;
 	pack.source = 2;
 	pack.destination = 3;
